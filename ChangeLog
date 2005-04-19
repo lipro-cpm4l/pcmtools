@@ -1,0 +1,29 @@
+2005-04-19	Stephan Linz <linz@li-pro.net>
+	* pcmtools.h, mkzg.c: new MKZG option OPT_MKZG_INVERSE
+	* mkzg.6416.c: new option; negated output
+
+2005-04-18	Stephan Linz <linz@li-pro.net>
+	* pcmtools.h, mkzg.c: new MKZG option OPT_MKZG_LEFTBOUND
+	* mkzg.c: fix problem with one a/o none color XPM
+	* mkzg.6416.c: new file; aded supoort for original PC/M 64x16
+	* mkzg.vid2k.c: change help phrase
+
+2005-04-17	Stephan Linz <linz@li-pro.net>
+	* change to automake 1.7 / autoconf 2.59
+
+2003-04-06	Stephan Linz <linz@li-pro.net>
+	* mkzg.vid2k.c mkzg.c: code spliting
+
+2003-03-29	Stephan Linz <linz@li-pro.net>
+	* mkzg.vid2k.c: new option --overview (-o)
+
+2003-03-28	Stephan Linz <linz@li-pro.net>
+	* mkzg.vid2k.c: new option --verbose (-v)
+	* data/ZG_VID2K/Makefile: targets for building hex and bin files
+	  of all currently known ascii character tables
+
+2003-03-27	Stephan Linz <linz@li-pro.net>
+	* all: first autoconfiguration
+
+2003-03-25	Stephan Linz <linz@li-pro.net>
+	* all: initial version
