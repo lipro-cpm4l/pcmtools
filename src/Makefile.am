@@ -4,13 +4,19 @@
 
 AM_CPPFLAGS = -I$(top_srcdir)/src
 
-noinst_HEADERS = \
-	pcmtools.h
-
+noinst_LTLIBRARIES = libmkzg.la
 bin_PROGRAMS = mkzg.vid2k mkzg.6416
 
-mkzg_vid2k_SOURCES = mkzg.c mkzg.vid2k.c
+mkzg_vid2k_SOURCES = mkzg.vid2k.c
+mkzg_vid2k_LDADD = libmkzg.la
 
-mkzg_6416_SOURCES = mkzg.c mkzg.6416.c
+mkzg_6416_SOURCES = mkzg.6416.c
+mkzg_6416_LDADD = libmkzg.la
+
+libmkzg_la_SOURCES = \
+	mkzg.c
+
+noinst_HEADERS = \
+	pcmtools.h
 
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
