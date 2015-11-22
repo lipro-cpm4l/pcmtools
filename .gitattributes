@@ -1,0 +1,7 @@
+* text=auto
+
+configure.ac text eol=lf
+doconf text eol=lf
+dodist text eol=lf
+domake text eol=lf
+reconf text eol=lf

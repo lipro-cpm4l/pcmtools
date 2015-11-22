@@ -1,0 +1,19 @@
+# Autotools-added generated files
+# Makefile.in
+# aclocal.m4
+# autom4te.cache/
+config.*
+# configure
+# depcomp
+# install-sh
+# data/Makefile.in
+# missing
+
+# Configure-process generated files
+Makefile
+stamp-h1
+
+# Make-process generated files
+mkzg.6416
+mkzg.vid2k
+*.o
