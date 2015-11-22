@@ -1,50 +1,37 @@
-PAK="pcmtools"
-VER="20050419"
-AC_PREREQ(2.59)
-AC_INIT(pcmtools, 20050419, linz@li-pro.net)
-AM_INIT_AUTOMAKE(pcmtools, 20050419)
-AM_CONFIG_HEADER([config.h])
+# Copyright (c) 2002-2015, Stephan Linz <linz@li-pro.net>
+# All rights reserved.
+#
 
-TMP=/usr
-AC_MSG_CHECKING([for X11 installation prefix])
-AC_ARG_WITH(X11,
-  [  --with-X11=<path>       prefix of X11 installation. [/usr]],
-  [X11_PREFIX=$with_X11] AC_MSG_RESULT([$with_X11]),
-  AC_MSG_RESULT([$TMP (default)])
-  AC_MSG_WARN([You should call configure with the --with-X11 option.
-  This tells configure where to find the X11 libraries and headers.
-  e.g. --with-X11=/usr or --with-X11=/usr/local])
-)
+# use autogen.sh
 
-if test -z "$with_X11" -o "$with_X11" = yes
-then
-  X11_PREFIX=$TMP
-fi
+AC_PREREQ([2.64])
+AC_INIT([PC/M Tools],
+	[2015-devel],
+	[pcmtools-bug@li-pro.net],
+	[pcmtools],
+	[https://github.com/lipro/pcmtools/])
 
-AC_SUBST(X11_PREFIX)
-X11_LIBS="-L${X11_PREFIX}/X11R6/lib"
-X11_CFLAGS="-I${X11_PREFIX}/include/X11"
-AC_SUBST(X11_LIBS)
-AC_SUBST(X11_CFLAGS)
+AC_CANONICAL_BUILD
+AC_CANONICAL_HOST
 
-DATA_INST_DIR='$(DESTDIR)$(datadir)/pcmtools'
-AC_SUBST(DATA_INST_DIR)
+AC_CONFIG_SRCDIR([src/mkzg.c])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
-AC_GNU_SOURCE
+AM_INIT_AUTOMAKE([-Wall -Wno-portability dist-bzip2 dist-zip subdir-objects])
+AM_MAINTAINER_MODE
 
+AC_USE_SYSTEM_EXTENSIONS
+
+AC_LANG([C])
 AC_PROG_CC
-AM_PROG_CC_STDC
-AC_PROG_CPP
+AC_PROG_CC_C99
+AM_PROG_CC_C_O
+AC_PROG_RANLIB
+AC_REQUIRE_CPP
+
 AC_PROG_INSTALL
 AM_PROG_INSTALL_STRIP
-AC_PROG_LN_S
-AC_PROG_RANLIB
-
-if test "$GCC" = yes
-then
-  CFLAGS="${CFLAGS} ${PIPE}-Wmissing-prototypes -Wstrict-prototypes -Wcast-qual -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wnested-externs -fno-common"
-  LDFLAGS="-g ${X11_LIBS}"
-fi
 
 dnl Checks for header files.
 AC_HEADER_STDC
@@ -63,4 +50,12 @@ dnl Checks for libraries.
 AC_CHECK_LIB(X11, XCreateWindow,,AC_MSG_ERROR([Cannot find correct X11 library]),)
 AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,,AC_MSG_ERROR([Cannot find correct Xpm library]),)
 
-AC_OUTPUT(Makefile data/Makefile)
+DATA_INST_DIR='$(DESTDIR)$(datadir)/pcmtools'
+AC_SUBST(DATA_INST_DIR)
+
+AC_CONFIG_FILES([
+	Makefile
+	src/Makefile
+	data/Makefile
+])
+AC_OUTPUT

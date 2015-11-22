@@ -1,15 +1,30 @@
+# temporary development files
+*~
+*.bak
+*.swp
+
+# release artefacts
+*.tar.bz2
+*.tar.gz
+*.zip
+
 # Autotools-added generated files
-# Makefile.in
-# aclocal.m4
-# autom4te.cache/
+Makefile.in
+aclocal.m4
+autom4te.cache/
 config.*
-# configure
-# depcomp
-# install-sh
-# data/Makefile.in
-# missing
+configure
+depcomp
+install-sh
+data/Makefile.in
+missing
+compile
+INSTALL
+README
+ChangeLog
 
 # Configure-process generated files
+.deps/
 Makefile
 stamp-h1
 
