@@ -30,7 +30,7 @@ static void usage(char *progname)
 	INF("%s", "");
 	INF("Package: %s", PACKAGE);
 	INF("Version: %s", VERSION);
-	INF("%s", "Please, report any errors to <linz@li-pro.net>");
+	INF("Please, report any errors to <%s>", PACKAGE_BUGREPORT);
 }
 
 #define EXSTAT_OK	0
