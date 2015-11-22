@@ -1,0 +1,7 @@
+language: c
+compiler: gcc
+# install: ./reconf
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libxpm-dev
+script: ./configure && make && make
