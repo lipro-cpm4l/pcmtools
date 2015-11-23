@@ -20,7 +20,7 @@ README: README.md
 
 ChangeLog: $(srcdir)/.git
 	git --git-dir $(srcdir)/.git log --pretty --numstat --summary | \
-	  sed -e '/Signed-off-by:/d' | git2cl > $@
+	  sed -e '/Signed-off-by:/d' | $(srcdir)/tools/git2cl/git2cl > $@
 
 # release with paranoia backup to avoid debauched git repository
 rel__tar = ${AMTAR} cof - ".git"
