@@ -4,4 +4,4 @@ install: ./autogen.sh
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq libxpm-dev
-script: ./configure && make check && make DESTDIR=${PWD}/__INSTALL__ install
+script: ./configure && make distcheck
