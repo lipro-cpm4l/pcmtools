@@ -22,16 +22,16 @@ clean:
 .SUFFIXES: .bin .hex .xpm
 
 %_inv.hex:
-	mkzg.6416 -xvn $(subst _inv,,$*)/*.xpm > $@
+	mkcg.6416 -xvn $(subst _inv,,$*)/*.xpm > $@
 
 %.hex:
-	mkzg.6416 -xv $*/*.xpm > $@
+	mkcg.6416 -xv $*/*.xpm > $@
 
 %_inv.xpm:
-	mkzg.6416 -qno 32 $(subst _inv,,$*)/*.xpm > $@
+	mkcg.6416 -qno 32 $(subst _inv,,$*)/*.xpm > $@
 
 %.xpm:
-	mkzg.6416 -qo 32 $*/*.xpm > $@
+	mkcg.6416 -qo 32 $*/*.xpm > $@
 
 .hex.bin:
 	xxd -r -c 8 $< > $@

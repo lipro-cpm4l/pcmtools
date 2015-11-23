@@ -10,7 +10,7 @@
 #define EXP_DOT_COLOR	"#000000"
 
 
-mkzg_zg ZG;
+mkcg_cg CG;
 
 
 static void usage(char *progname)
@@ -43,21 +43,21 @@ static void usage(char *progname)
 
 static void exit_func(int status, void *arg)
 {
-	mkzg_zg	*zgp = (mkzg_zg *)arg;
+	mkcg_cg	*cgp = (mkcg_cg *)arg;
 
 	switch (status) {
 
 		case EXSTAT_WRONGOPT:
 #if 0
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 #endif
 			ERR("%s\n", "invalid option");
 		case EXSTAT_HELP:
-			usage(zgp->progname);
+			usage(cgp->progname);
 			break;
 
 		case EXSTAT_NOFILES:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "missing file list");
 			break;
 
@@ -66,37 +66,37 @@ static void exit_func(int status, void *arg)
 			break;
 
 		case EXSTAT_NOMEM:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "no memory");
 			break;
 
 		case EXSTAT_CONVERR:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "internal conversion error");
 			break;
 
 		case XpmColorError:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "XPM: color error");
 			break;
 
 		case XpmOpenFailed:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "XPM: can not open file");
 			break;
 
 		case XpmFileInvalid:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "XPM: no pixmap file");
 			break;
 
 		case XpmNoMemory:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "XPM: no memory");
 			break;
 
 		case XpmColorFailed:
-			if (!(zgp->options & OPT_MKZG_QUIET))
+			if (!(cgp->options & OPT_MKCG_QUIET))
 				ERR("%s\n", "internal conversion error");
 			break;
 
@@ -105,7 +105,7 @@ static void exit_func(int status, void *arg)
 			break;
 	}
 
-	if (zgp->z) free(zgp->z);
+	if (cgp->ch) free(cgp->ch);
 }
 
 main(int argc, char **argv)
@@ -117,18 +117,18 @@ main(int argc, char **argv)
 	XpmImage	image;
 	XpmInfo		info;
 
-	ZG.options	= OPT_MKZG_NEGATED;
-	ZG.progname	= argv[0];
-	ZG.z		= (mkzg_z *)NULL;
+	CG.options	= OPT_MKCG_NEGATED;
+	CG.progname	= argv[0];
+	CG.ch		= (mkcg_ch *)NULL;
 
-	ZG.bound_bits		= BOUND_BITS;
-	ZG.bound_bytes		= BOUND_BYTES;
-	ZG.exp_z_width		= EXP_WIDTH;
-	ZG.exp_z_hight		= EXP_HIGHT;
-	ZG.exp_z_max_color	= EXP_MAX_COLOR;
-	ZG.exp_z_dot_color	= EXP_DOT_COLOR;
+	CG.bound_bits		= BOUND_BITS;
+	CG.bound_bytes		= BOUND_BYTES;
+	CG.exp_ch_width		= EXP_WIDTH;
+	CG.exp_ch_hight		= EXP_HIGHT;
+	CG.exp_ch_max_color	= EXP_MAX_COLOR;
+	CG.exp_ch_dot_color	= EXP_DOT_COLOR;
 
-	on_exit(exit_func, (void *)&ZG);
+	on_exit(exit_func, (void *)&CG);
 
 	while (1) {
 		int this_option_optind = optind ? optind : 1;
@@ -150,32 +150,32 @@ main(int argc, char **argv)
 
 		switch (c) {
 			case 'b':
-				ZG.options |= (ZG.options & OPT_MKZG_ACTIONMASK) ?
-					ZG.options : OPT_MKZG_BANNER;
+				CG.options |= (CG.options & OPT_MKCG_ACTIONMASK) ?
+					CG.options : OPT_MKCG_BANNER;
 				break;
 
 			case 'x':
-				ZG.options |= (ZG.options & OPT_MKZG_ACTIONMASK) ?
-					ZG.options : OPT_MKZG_HEXDUMP;
+				CG.options |= (CG.options & OPT_MKCG_ACTIONMASK) ?
+					CG.options : OPT_MKCG_HEXDUMP;
 				break;
 
 			case 'o':
-				ZG.options |= (ZG.options & OPT_MKZG_ACTIONMASK) ?
-					ZG.options : OPT_MKZG_OVERVIEW;
+				CG.options |= (CG.options & OPT_MKCG_ACTIONMASK) ?
+					CG.options : OPT_MKCG_OVERVIEW;
 				if (isdigit(optarg[0]))
-					ZG.opt_overview_cols = atol(optarg);
+					CG.opt_overview_cols = atol(optarg);
 				else {
 					optind--;
-					ZG.opt_overview_cols = 16;
+					CG.opt_overview_cols = 16;
 				}
 				break;
 
 			case 'q':
-				ZG.options |= OPT_MKZG_QUIET;
+				CG.options |= OPT_MKCG_QUIET;
 				break;
 
 			case 'v':
-				ZG.options |= OPT_MKZG_VERBOSE;
+				CG.options |= OPT_MKCG_VERBOSE;
 				break;
 
 			case 'h':
@@ -186,54 +186,54 @@ main(int argc, char **argv)
 		}
 	}
 
-	ZG.options |= (ZG.options & OPT_MKZG_ACTIONMASK) ? ZG.options : OPT_MKZG_HEXDUMP;
+	CG.options |= (CG.options & OPT_MKCG_ACTIONMASK) ? CG.options : OPT_MKCG_HEXDUMP;
 
 	if (optind < argc) {
 
-		ZG.number = 0;
+		CG.number = 0;
 		while (optind < argc) {
-			ZG.number++;
+			CG.number++;
 			optind++;
 		}
 
-		optind -= ZG.number;
+		optind -= CG.number;
 
-		if (!(ZG.z = (mkzg_z *)malloc(ZG.number * sizeof(mkzg_z))))
+		if (!(CG.ch = (mkcg_ch *)malloc(CG.number * sizeof(mkcg_ch))))
 			exit(EXSTAT_NOMEM);
 
-		for (cnt = 0; cnt < ZG.number; cnt++) {
+		for (cnt = 0; cnt < CG.number; cnt++) {
 
-			ZG.z[cnt].filename		= argv[optind++];
-			ZG.z[cnt].info.valuemask	= XpmReturnComments
+			CG.ch[cnt].filename		= argv[optind++];
+			CG.ch[cnt].info.valuemask	= XpmReturnComments
 							| XpmReturnExtensions;
-			status = XpmReadFileToXpmImage(ZG.z[cnt].filename,
-					&(ZG.z[cnt].image),
-					&(ZG.z[cnt].info));
+			status = XpmReadFileToXpmImage(CG.ch[cnt].filename,
+					&(CG.ch[cnt].image),
+					&(CG.ch[cnt].info));
 			if (status != XpmSuccess)
 				exit(status);
 
-			if (!mkzg_isvalidz(&(ZG.z[cnt].image), &ZG, &(ZG.z[cnt])))
+			if (!mkcg_isvalidch(&(CG.ch[cnt].image), &CG, &(CG.ch[cnt])))
 				exit(EXSTAT_CONVERR);
 
 		}
 
-		for (cnt = 0; cnt < ZG.number; cnt++) {
+		for (cnt = 0; cnt < CG.number; cnt++) {
 
-			if (ZG.options & OPT_MKZG_VERBOSE)
-				INF("process: %s ... ", ZG.z[cnt].filename);
+			if (CG.options & OPT_MKCG_VERBOSE)
+				INF("process: %s ... ", CG.ch[cnt].filename);
 
-			switch (ZG.options & OPT_MKZG_ACTIONMASK) {
+			switch (CG.options & OPT_MKCG_ACTIONMASK) {
 
-				case OPT_MKZG_BANNER:
-					mkzg_out_banner(&ZG, &(ZG.z[cnt]));
+				case OPT_MKCG_BANNER:
+					mkcg_out_banner(&CG, &(CG.ch[cnt]));
 					break;
 
-				case OPT_MKZG_HEXDUMP:
-					mkzg_out_xxd(&ZG, &(ZG.z[cnt]), cnt * ZG.bound_bytes);
+				case OPT_MKCG_HEXDUMP:
+					mkcg_out_xxd(&CG, &(CG.ch[cnt]), cnt * CG.bound_bytes);
 					break;
 
-				case OPT_MKZG_OVERVIEW:
-					if (!cnt) mkzg_out_xpm(&ZG);
+				case OPT_MKCG_OVERVIEW:
+					if (!cnt) mkcg_out_xpm(&CG);
 					break;
 
 				default:
@@ -241,10 +241,10 @@ main(int argc, char **argv)
 			}
 		}
 
-		for (cnt = 0; cnt < ZG.number; cnt++) {
+		for (cnt = 0; cnt < CG.number; cnt++) {
 
-			XpmFreeXpmImage(&(ZG.z[cnt].image));
-			XpmFreeXpmInfo(&(ZG.z[cnt].info));
+			XpmFreeXpmImage(&(CG.ch[cnt].image));
+			XpmFreeXpmInfo(&(CG.ch[cnt].info));
 
 		}
 

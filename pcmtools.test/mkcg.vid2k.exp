@@ -3,7 +3,7 @@
 #
 
 set test "package"
-spawn ./src/mkzg.6416
+spawn ./src/mkcg.vid2k
 expect {
   -re "Package: pcmtools\r\n" {
     pass "$test"
@@ -12,7 +12,7 @@ expect {
 }
 
 set test "version"
-spawn ./src/mkzg.6416
+spawn ./src/mkcg.vid2k
 expect {
   -re "Version: 2015-devel\r\n" {
     pass "$test"
@@ -21,27 +21,27 @@ expect {
 }
 
 set test "provides"
-spawn ./src/mkzg.6416
+spawn ./src/mkcg.vid2k
 expect {
-  -re "original PC/M 64x16 character generator PROM" {
+  -re "PC/M VID2k character generator PROM" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
 set test "hexdump-single"
-spawn ./src/mkzg.6416 --hexdump ${srcdir}/data/ZG_6416/original/ascii_0x30.xpm
+spawn ./src/mkcg.vid2k --hexdump ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
 expect {
-  -re "^0000000: 38 44 4C 54 64 44 38 00 \r\n" {
+  -re "^0000000: C7 BB B3 AB 9B BB C7 FF FF FF FF FF FF FF FF FF \r\n" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
 set test "hexdump-single-negated"
-spawn ./src/mkzg.6416 --neg --hexdump ${srcdir}/data/ZG_6416/original/ascii_0x30.xpm
+spawn ./src/mkcg.vid2k --neg --hexdump ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
 expect {
-  -re "^0000000: C6 BA B2 AA 9A BA C6 FE \r\n" {
+  -re "^.*: unrecognized option '--neg'\r\n" {
     pass "$test"
   }
   eof {fail "$test"}

@@ -10,8 +10,8 @@ SUBDIRS = src data
 
 EXTRA_DIST =
 EXTRA_DIST +=				\
-	pcmtools.test/mkzg.6416.exp	\
-	pcmtools.test/mkzg.vid2k.exp	\
+	pcmtools.test/mkcg.6416.exp	\
+	pcmtools.test/mkcg.vid2k.exp	\
 	ChangeLog-20050419		\
 	README.md
 

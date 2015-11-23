@@ -33,6 +33,6 @@ Makefile
 stamp-h1
 
 # Make-process generated files
-mkzg.6416
-mkzg.vid2k
+mkcg.6416
+mkcg.vid2k
 *.o
