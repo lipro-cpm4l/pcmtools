@@ -4,14 +4,18 @@
 
 AM_CPPFLAGS = -I$(top_srcdir)/src
 
-noinst_LTLIBRARIES = libmkzg.la
-bin_PROGRAMS = mkzg.vid2k mkzg.6416
+check_PROGRAMS = 			\
+	mkzg.6416			\
+	mkzg.vid2k
 
-mkzg_vid2k_SOURCES = mkzg.vid2k.c
-mkzg_vid2k_LDADD = libmkzg.la
+noinst_LTLIBRARIES = libmkzg.la
+bin_PROGRAMS = mkzg.6416 mkzg.vid2k
 
 mkzg_6416_SOURCES = mkzg.6416.c
 mkzg_6416_LDADD = libmkzg.la
+
+mkzg_vid2k_SOURCES = mkzg.vid2k.c
+mkzg_vid2k_LDADD = libmkzg.la
 
 libmkzg_la_SOURCES = \
 	mkzg.c

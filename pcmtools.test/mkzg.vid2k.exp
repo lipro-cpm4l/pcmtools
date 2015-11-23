@@ -1,0 +1,48 @@
+# Copyright (c) 2015, Stephan Linz <linz@li-pro.net>
+# All rights reserved.
+#
+
+set test "package"
+spawn ./src/mkzg.vid2k
+expect {
+  -re "Package: pcmtools\r\n" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}
+
+set test "version"
+spawn ./src/mkzg.vid2k
+expect {
+  -re "Version: 2015-devel\r\n" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}
+
+set test "provides"
+spawn ./src/mkzg.vid2k
+expect {
+  -re "PC/M VID2k character generator PROM" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}
+
+set test "hexdump-single"
+spawn ./src/mkzg.vid2k --hexdump ./data/ZG_VID2K/original/ascii_0x30.xpm
+expect {
+  -re "^0000000: C7 BB B3 AB 9B BB C7 FF FF FF FF FF FF FF FF FF \r\n" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}
+
+set test "hexdump-single-negated"
+spawn ./src/mkzg.vid2k --neg --hexdump ./data/ZG_VID2K/original/ascii_0x30.xpm
+expect {
+  -re "^.*: unrecognized option '--neg'\r\n" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}

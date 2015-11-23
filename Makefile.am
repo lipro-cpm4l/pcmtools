@@ -4,10 +4,14 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
+AUTOMAKE_OPTIONS = dejagnu
+
 SUBDIRS = src data
 
 EXTRA_DIST =
 EXTRA_DIST +=				\
+	pcmtools.test/mkzg.6416.exp	\
+	pcmtools.test/mkzg.vid2k.exp	\
 	ChangeLog-20050419		\
 	README.md
 
