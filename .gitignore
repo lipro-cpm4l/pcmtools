@@ -19,6 +19,10 @@ install-sh
 data/Makefile.in
 missing
 compile
+m4/lt*.m4
+m4/libtool.m4
+libtool
+ltmain.sh
 INSTALL
 README
 ChangeLog
