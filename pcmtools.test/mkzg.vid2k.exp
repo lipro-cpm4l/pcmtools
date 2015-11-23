@@ -30,7 +30,7 @@ expect {
 }
 
 set test "hexdump-single"
-spawn ./src/mkzg.vid2k --hexdump ./data/ZG_VID2K/original/ascii_0x30.xpm
+spawn ./src/mkzg.vid2k --hexdump ${srcdir}/data/ZG_VID2K/original/ascii_0x30.xpm
 expect {
   -re "^0000000: C7 BB B3 AB 9B BB C7 FF FF FF FF FF FF FF FF FF \r\n" {
     pass "$test"
@@ -39,7 +39,7 @@ expect {
 }
 
 set test "hexdump-single-negated"
-spawn ./src/mkzg.vid2k --neg --hexdump ./data/ZG_VID2K/original/ascii_0x30.xpm
+spawn ./src/mkzg.vid2k --neg --hexdump ${srcdir}/data/ZG_VID2K/original/ascii_0x30.xpm
 expect {
   -re "^.*: unrecognized option '--neg'\r\n" {
     pass "$test"

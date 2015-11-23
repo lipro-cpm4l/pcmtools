@@ -30,7 +30,7 @@ expect {
 }
 
 set test "hexdump-single"
-spawn ./src/mkzg.6416 --hexdump ./data/ZG_6416/original/ascii_0x30.xpm
+spawn ./src/mkzg.6416 --hexdump ${srcdir}/data/ZG_6416/original/ascii_0x30.xpm
 expect {
   -re "^0000000: 38 44 4C 54 64 44 38 00 \r\n" {
     pass "$test"
@@ -39,7 +39,7 @@ expect {
 }
 
 set test "hexdump-single-negated"
-spawn ./src/mkzg.6416 --neg --hexdump ./data/ZG_6416/original/ascii_0x30.xpm
+spawn ./src/mkzg.6416 --neg --hexdump ${srcdir}/data/ZG_6416/original/ascii_0x30.xpm
 expect {
   -re "^0000000: C6 BA B2 AA 9A BA C6 FE \r\n" {
     pass "$test"
