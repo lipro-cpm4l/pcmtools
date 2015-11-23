@@ -1,10 +1,10 @@
 #include "pcmtools.h"
 
-#define BOUND_BITS	7	/* !!! never less than EXP_WIDTH !!! */
-#define BOUND_BYTES	8
+#define BOUND_BITS	8	/* !!! never less than EXP_WIDTH !!! */
+#define BOUND_BYTES	16
 
-#define EXP_WIDTH	7	/* !!! never more than 8 !!! */
-#define EXP_HIGHT	8	/* !!! never more than BOUND_BYTES !!! */
+#define EXP_WIDTH	8	/* !!! never more than 8 !!! */
+#define EXP_HIGHT	10	/* !!! never more than BOUND_BYTES !!! */
 #define EXP_MAX_COLOR	2	/* !!! more than 2 colors are stupid, because
 				       only one dot color will be used !!! */
 #define EXP_DOT_COLOR	"#000000"
@@ -17,13 +17,12 @@ static void usage(char *progname)
 {
 	INF("Usage: %s [OPTION]... XPMFILE...", progname);
 	INF("%s", "Convert one or more pixmaps into a special hexdump needed by the");
-	INF("%s", "original PC/M 64x16 character generator PROM. You can translate");
-	INF("%s", "this hexdump into a plain binary file with the powerful Vim tool");
-	INF("%s", "'xxd' and further into srecord.");
+	INF("%s", "PC/M VID2k character generator PROM. You can translate this hexdump");
+	INF("%s", "into a plain binary file with the powerful Vim tool 'xxd' and");
+	INF("%s", "further into srecord.");
 	INF("%s", "");
 	INF("%s", "-b,        --banner    make banner dump");
 	INF("%s", "-h,        --help      show this quick help message");
-	INF("%s", "-n,        --neg       negated output (banner and hexdump)");
 	INF("%s", "-o [COLS], --overview  build an new pixmap with all XPMFILEs together");
 	INF("%s", "-q,        --quiet     don't report any errors");
 	INF("%s", "-v,        --verbose   show more progress information at stderr");
@@ -31,7 +30,7 @@ static void usage(char *progname)
 	INF("%s", "");
 	INF("Package: %s", PACKAGE);
 	INF("Version: %s", VERSION);
-	INF("%s", "Please, report any errors to <linz@li-pro.net>");
+	INF("Please, report any errors to <%s>", PACKAGE_BUGREPORT);
 }
 
 #define EXSTAT_OK	0
@@ -118,7 +117,7 @@ main(int argc, char **argv)
 	XpmImage	image;
 	XpmInfo		info;
 
-	ZG.options	= OPT_MKZG_LEFTBOUND /* default not: OPT_MKZG_NEGATED */;
+	ZG.options	= OPT_MKZG_NEGATED;
 	ZG.progname	= argv[0];
 	ZG.z		= (mkzg_z *)NULL;
 
@@ -139,14 +138,13 @@ main(int argc, char **argv)
 			{"banner", 0, 0, 'b'},
 			{"help", 0, 0, 'h'},
 			{"hexdump", 0, 0, 'x'},
-			{"neg", 0, 0, 'n'},
 			{"overview", 0, 0, 'o'},
 			{"quiet", 0, 0, 'q'},
 			{"verbose", 0, 0, 'v'},
 			{0, 0, 0, 0},
 		};
 
-		c = getopt_long (argc, argv, "bhno:qxv",
+		c = getopt_long (argc, argv, "bho:qxv",
 				long_options, &option_index);
 		if (c == -1) break;
 
@@ -170,11 +168,6 @@ main(int argc, char **argv)
 					optind--;
 					ZG.opt_overview_cols = 16;
 				}
-				break;
-
-			case 'n':
-				ZG.options |= OPT_MKZG_NEGATED;
-				ZG.options |= OPT_MKZG_INVERSE;
 				break;
 
 			case 'q':

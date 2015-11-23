@@ -1,18 +1,69 @@
-# Copyright (c) 2002, Stephan Linz <linz@li-pro.net>
+# Copyright (c) 2002-2015, Stephan Linz <linz@li-pro.net>
 # All rights reserved.
 #
 
-## Process this file with automake to generate Makefile.in
+ACLOCAL_AMFLAGS = -I m4
 
-AUTOMAKE_OPTIONS = gnu
+AUTOMAKE_OPTIONS = dejagnu
 
-SUBDIRS = data
-DIST_SUBDIRS = data
+SUBDIRS = src data
 
-bin_PROGRAMS = mkzg.vid2k mkzg.6416
+EXTRA_DIST =
+EXTRA_DIST +=				\
+	pcmtools.test/mkzg.6416.exp	\
+	pcmtools.test/mkzg.vid2k.exp	\
+	ChangeLog-20050419		\
+	README.md
 
-mkzg_vid2k_SOURCES = mkzg.c mkzg.vid2k.c
+README: README.md
+	fgrep -v "[Build Status]" $<  > $@
 
-mkzg_6416_SOURCES = mkzg.c mkzg.6416.c
+ChangeLog: $(srcdir)/.git
+	git --git-dir $(srcdir)/.git log --pretty --numstat --summary | \
+	  sed -e '/Signed-off-by:/d' | $(srcdir)/tools/git2cl/git2cl > $@
 
-EXTRA_DIST = doconf dodist domake reconf pcmtools.h
+# release with paranoia backup to avoid debauched git repository
+rel__tar = ${AMTAR} cof - ".git"
+.PHONY: release
+release: $(srcdir)/.git
+	$(rel__tar) | bzip2 -9 -c >.backup-gitmeta-$$(date +%s).tar.bz2 && \
+	touch configure.ac && \
+	$(MAKE)  $(AM_MAKEFLAGS) \
+	  top_distdir="$(top_distdir)" \
+	  distdir="$(distdir)" \
+	  distcheck && \
+	git --git-dir $(srcdir)/.git \
+	  commit -asm 'Prepare release $(PACKAGE_VERSION)' && \
+	git --git-dir $(srcdir)/.git \
+	  branch --no-track release/v$(PACKAGE_VERSION) && \
+	git --git-dir $(srcdir)/.git \
+	  tag -sm 'v$(PACKAGE_VERSION)' v$(PACKAGE_VERSION) && \
+	touch configure.ac && \
+	$(MAKE)  $(AM_MAKEFLAGS) \
+	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
+	  distcheck && \
+	git --git-dir $(srcdir)/.git \
+	  commit --amend -aC HEAD
+
+MAINTAINERCLEANFILES = \
+	$(srcdir)/README \
+	$(srcdir)/INSTALL \
+	$(srcdir)/ChangeLog \
+	$(srcdir)/configure \
+	$(srcdir)/configure.ac~ \
+	$(srcdir)/Makefile.in \
+	$(srcdir)/depcomp \
+	$(srcdir)/config.guess \
+	$(srcdir)/config.sub \
+	$(srcdir)/config.h.in \
+	$(srcdir)/config.h.in~ \
+	$(srcdir)/compile \
+	$(srcdir)/ltmain.sh \
+	$(srcdir)/m4/libtool.m4 \
+	$(srcdir)/m4/lt~obsolete.m4 \
+	$(srcdir)/m4/ltoptions.m4 \
+	$(srcdir)/m4/ltsugar.m4 \
+	$(srcdir)/m4/ltversion.m4 \
+	$(srcdir)/missing \
+	$(srcdir)/aclocal.m4 \
+	$(srcdir)/install-sh
