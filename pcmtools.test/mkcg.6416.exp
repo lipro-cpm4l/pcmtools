@@ -30,7 +30,8 @@ expect {
 }
 
 set test "hexdump-single"
-spawn ./src/mkcg.6416 --hexdump ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
+spawn ./src/mkcg.6416 --hexdump \
+      ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
 expect {
   -re "^0000000: 38 44 4C 54 64 44 38 00 \r\n" {
     pass "$test"
@@ -39,9 +40,20 @@ expect {
 }
 
 set test "hexdump-single-negated"
-spawn ./src/mkcg.6416 --neg --hexdump ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
+spawn ./src/mkcg.6416 --neg --hexdump \
+      ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
 expect {
   -re "^0000000: C6 BA B2 AA 9A BA C6 FE \r\n" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}
+
+set test "overview-original"
+spawn ./src/mkcg.6416 --quiet -o 32 \
+      [lsort [glob -dir "${srcdir}/data/CG_6416/original" "*.xpm"]]
+expect {
+  -re "^\/\* XPM \*\/\r\n" {
     pass "$test"
   }
   eof {fail "$test"}

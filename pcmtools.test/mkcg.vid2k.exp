@@ -30,7 +30,8 @@ expect {
 }
 
 set test "hexdump-single"
-spawn ./src/mkcg.vid2k --hexdump ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
+spawn ./src/mkcg.vid2k --hexdump \
+      ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
 expect {
   -re "^0000000: C7 BB B3 AB 9B BB C7 FF FF FF FF FF FF FF FF FF \r\n" {
     pass "$test"
@@ -39,9 +40,20 @@ expect {
 }
 
 set test "hexdump-single-negated"
-spawn ./src/mkcg.vid2k --neg --hexdump ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
+spawn ./src/mkcg.vid2k --neg --hexdump \
+      ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
 expect {
   -re "^.*: unrecognized option '--neg'\r\n" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}
+
+set test "overview-original"
+spawn ./src/mkcg.vid2k --quiet -o 32 \
+      [lsort [glob -dir "${srcdir}/data/CG_VID2K/original" "*.xpm"]]
+expect {
+  -re "^\/\* XPM \*\/\r\n" {
     pass "$test"
   }
   eof {fail "$test"}
