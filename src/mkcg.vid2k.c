@@ -21,12 +21,12 @@ static void usage(char *progname)
 	INF("%s", "into a plain binary file with the powerful Vim tool 'xxd' and");
 	INF("%s", "further into srecord.");
 	INF("%s", "");
-	INF("%s", "-b,        --banner    make banner dump");
-	INF("%s", "-h,        --help      show this quick help message");
-	INF("%s", "-o [COLS], --overview  build an new pixmap with all XPMFILEs together");
-	INF("%s", "-q,        --quiet     don't report any errors");
-	INF("%s", "-v,        --verbose   show more progress information at stderr");
-	INF("%s", "-x,        --hexdump   make xxd conform hexdump (default)");
+	INF("%s", "-b,       --banner           make banner dump");
+	INF("%s", "-h,       --help             show this quick help message");
+	INF("%s", "-o[COLS], --overview[=COLS]  build an new pixmap with all XPMFILEs together");
+	INF("%s", "-q,       --quiet            don't report any errors");
+	INF("%s", "-v,       --verbose          show more progress information at stderr");
+	INF("%s", "-x,       --hexdump          make xxd conform hexdump (default)");
 	INF("%s", "");
 	INF("Package: %s", PACKAGE);
 	INF("Version: %s", VERSION);
@@ -108,7 +108,7 @@ static void exit_func(int status, void *arg)
 	if (cgp->ch) free(cgp->ch);
 }
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	unsigned int	cnt;
 	unsigned int	black;
@@ -135,16 +135,16 @@ main(int argc, char **argv)
 		int option_index = 0;
 		int c;
 		static struct option long_options[] = {
-			{"banner", 0, 0, 'b'},
-			{"help", 0, 0, 'h'},
-			{"hexdump", 0, 0, 'x'},
-			{"overview", 0, 0, 'o'},
-			{"quiet", 0, 0, 'q'},
-			{"verbose", 0, 0, 'v'},
+			{"banner",	no_argument,		0, 'b'},
+			{"help",	no_argument,		0, 'h'},
+			{"hexdump",	no_argument,		0, 'x'},
+			{"overview",	optional_argument,	0, 'o'},
+			{"quiet",	no_argument,		0, 'q'},
+			{"verbose",	no_argument,		0, 'v'},
 			{0, 0, 0, 0},
 		};
 
-		c = getopt_long (argc, argv, "bho:qxv",
+		c = getopt_long (argc, argv, ":bho::qxv",
 				long_options, &option_index);
 		if (c == -1) break;
 
@@ -162,12 +162,10 @@ main(int argc, char **argv)
 			case 'o':
 				CG.options |= (CG.options & OPT_MKCG_ACTIONMASK) ?
 					CG.options : OPT_MKCG_OVERVIEW;
-				if (isdigit(optarg[0]))
+				if ((optarg != NULL) && isdigit(optarg[0]))
 					CG.opt_overview_cols = atol(optarg);
-				else {
-					optind--;
+				else
 					CG.opt_overview_cols = 16;
-				}
 				break;
 
 			case 'q':
