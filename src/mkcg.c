@@ -242,7 +242,7 @@ bool mkcg_out_xpm(mkcg_cg *cg)
 	image.width		= pixel_in_cols;
 	image.height		= pixel_in_rows;
 	image.cpp		= 1;
-	image.ncolors		= sizeof(colortable);
+	image.ncolors		= COLNUM;
 	image.colorTable	= colortable;
 	image.data		= pixeldata;
 
