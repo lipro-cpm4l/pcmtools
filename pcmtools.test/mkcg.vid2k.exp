@@ -5,7 +5,7 @@
 set test "package"
 spawn ./src/mkcg.vid2k
 expect {
-  -re "Package: pcmtools\r\n" {
+  -re "^.*\\r\\nPackage: pcmtools\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -14,7 +14,7 @@ expect {
 set test "version"
 spawn ./src/mkcg.vid2k
 expect {
-  -re "Version: 2015-devel\r\n" {
+  -re "^.*\\r\\nVersion: 2015-devel\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -23,7 +23,7 @@ expect {
 set test "provides"
 spawn ./src/mkcg.vid2k
 expect {
-  -re "PC/M VID2k character generator PROM" {
+  -re "^.*\\r\\nPC/M VID2k character generator PROM.*\\r\\n$" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -33,7 +33,7 @@ set test "hexdump-single"
 spawn ./src/mkcg.vid2k --hexdump \
       ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
 expect {
-  -re "^0000000: C7 BB B3 AB 9B BB C7 FF FF FF FF FF FF FF FF FF \r\n" {
+  -re "^0000000: C7 BB B3 AB 9B BB C7 FF FF FF FF FF FF FF FF FF \\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -43,17 +43,17 @@ set test "hexdump-single-negated"
 spawn ./src/mkcg.vid2k --neg --hexdump \
       ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
 expect {
-  -re "^.*: unrecognized option '--neg'\r\n" {
+  -re "^.*: invalid option\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
-set test "overview-original"
-spawn ./src/mkcg.vid2k --quiet -o 32 \
-      [lsort [glob -dir "${srcdir}/data/CG_VID2K/original" "*.xpm"]]
+set test "overview-original-ascii-0x30"
+spawn ./src/mkcg.vid2k --quiet --overview=32 \
+      ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
 expect {
-  -re "^\/\* XPM \*\/\r\n" {
+  -re "^/\\* XPM \\*/\r\n.*\r\n.*\"256 10 4 1\",\r\n.*\r\n$" {
     pass "$test"
   }
   eof {fail "$test"}

@@ -5,7 +5,7 @@
 set test "package"
 spawn ./src/mkcg.6416
 expect {
-  -re "Package: pcmtools\r\n" {
+  -re "^.*\\r\\nPackage: pcmtools\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -14,7 +14,7 @@ expect {
 set test "version"
 spawn ./src/mkcg.6416
 expect {
-  -re "Version: 2015-devel\r\n" {
+  -re "^.*\\r\\nVersion: 2015-devel\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -23,7 +23,7 @@ expect {
 set test "provides"
 spawn ./src/mkcg.6416
 expect {
-  -re "original PC/M 64x16 character generator PROM" {
+  -re "^.*\\r\\noriginal PC/M 64x16 character generator PROM.*\\r\\n$" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -33,7 +33,7 @@ set test "hexdump-single"
 spawn ./src/mkcg.6416 --hexdump \
       ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
 expect {
-  -re "^0000000: 38 44 4C 54 64 44 38 00 \r\n" {
+  -re "^0000000: 38 44 4C 54 64 44 38 00 \\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
@@ -43,17 +43,17 @@ set test "hexdump-single-negated"
 spawn ./src/mkcg.6416 --neg --hexdump \
       ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
 expect {
-  -re "^0000000: C6 BA B2 AA 9A BA C6 FE \r\n" {
+  -re "^0000000: C6 BA B2 AA 9A BA C6 FE \\r\\n$" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
-set test "overview-original"
-spawn ./src/mkcg.6416 --quiet -o 32 \
-      [lsort [glob -dir "${srcdir}/data/CG_6416/original" "*.xpm"]]
+set test "overview-original-ascii-0x30"
+spawn ./src/mkcg.6416 --quiet --overview=32 \
+      ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
 expect {
-  -re "^\/\* XPM \*\/\r\n" {
+  -re "^/\\* XPM \\*/\\r\\n.*\\r\\n.*\"224 8 4 1\",\\r\\n.*\\r\\n$" {
     pass "$test"
   }
   eof {fail "$test"}
