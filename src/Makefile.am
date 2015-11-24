@@ -5,20 +5,20 @@
 AM_CPPFLAGS = -I$(top_srcdir)/src
 
 check_PROGRAMS = 			\
-	mkzg.6416			\
-	mkzg.vid2k
+	mkcg.6416			\
+	mkcg.vid2k
 
-noinst_LTLIBRARIES = libmkzg.la
-bin_PROGRAMS = mkzg.6416 mkzg.vid2k
+noinst_LTLIBRARIES = libmkcg.la
+bin_PROGRAMS = mkcg.6416 mkcg.vid2k
 
-mkzg_6416_SOURCES = mkzg.6416.c
-mkzg_6416_LDADD = libmkzg.la
+mkcg_6416_SOURCES = mkcg.6416.c
+mkcg_6416_LDADD = libmkcg.la
 
-mkzg_vid2k_SOURCES = mkzg.vid2k.c
-mkzg_vid2k_LDADD = libmkzg.la
+mkcg_vid2k_SOURCES = mkcg.vid2k.c
+mkcg_vid2k_LDADD = libmkcg.la
 
-libmkzg_la_SOURCES = \
-	mkzg.c
+libmkcg_la_SOURCES = \
+	mkcg.c
 
 noinst_HEADERS = \
 	pcmtools.h

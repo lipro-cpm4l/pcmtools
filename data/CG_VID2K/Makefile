@@ -31,10 +31,10 @@ clean:
 .SUFFIXES: .bin .hex .xpm
 
 %.hex:
-	mkzg.vid2k -xv $*/*.xpm > $@
+	mkcg.vid2k -xv $*/*.xpm > $@
 
 %.xpm:
-	mkzg.vid2k -qo 32 $*/*.xpm > $@
+	mkcg.vid2k -qo 32 $*/*.xpm > $@
 
 .hex.bin:
 	xxd -r -c 16 $< > $@

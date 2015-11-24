@@ -4,8 +4,8 @@
 
 EXTRA_DIST =
 EXTRA_DIST +=				\
-	ZG_6416				\
-	ZG_VID2K
+	CG_6416				\
+	CG_VID2K
 
 DATA_INST_DIR = @DATA_INST_DIR@
 
