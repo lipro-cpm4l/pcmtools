@@ -24,19 +24,20 @@ EXTRA_DIST +=				\
 	CG_6416				\
 	CG_VID2K
 
-DATA_INST_DIR = @DATA_INST_DIR@
+pkgdatadir = @pkgdatadir@
 
 install-data-local:
-	for dir in `cd $(top_srcdir)/data; find $(EXTRA_DIST) -type d` ; do \
-	  echo " $(mkinstalldirs) $(DATA_INST_DIR)/$$dir"; \
-	  $(mkinstalldirs) $(DATA_INST_DIR)/$$dir; \
+	$(AM_V_GEN)for dir in `cd $(top_srcdir)/data; \
+	                       find $(EXTRA_DIST) -type d` ; do \
+	  $(mkinstalldirs) $(DESTDIR)$(pkgdatadir)/$$dir; \
 	done
-	for file in `cd $(top_srcdir)/data; find $(EXTRA_DIST) -type f` ; do \
-	  echo " $(INSTALL_DATA) $(top_srcdir)/data/$$file $(DATA_INST_DIR)/$$file"; \
-	  $(INSTALL_DATA) $(top_srcdir)/data/$$file $(DATA_INST_DIR)/$$file; \
+	$(AM_V_GEN)for file in `cd $(top_srcdir)/data; \
+	                        find $(EXTRA_DIST) -type f` ; do \
+	  $(INSTALL_DATA) $(top_srcdir)/data/$$file \
+                          $(DESTDIR)$(pkgdatadir)/$$file; \
 	done
 
 uninstall-local:
-	rm -rf $(DATA_INST_DIR)
+	rm -rf $(DESTDIR)$(pkgdatadir)
 
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in

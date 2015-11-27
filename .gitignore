@@ -8,39 +8,48 @@
 *.tar.gz
 *.zip
 
-# DejaGnu artefacts
-pcmtools.log
-pcmtools.sum
-site.exp
-
 # Autotools-added generated files
-Makefile.in
-aclocal.m4
-autom4te.cache/
-config.*
-configure
-depcomp
-install-sh
-data/Makefile.in
-missing
-compile
-m4/lt*.m4
-m4/libtool.m4
-libtool
-ltmain.sh
-INSTALL
-README
-ChangeLog
+/m4/lt*.m4
+/m4/libtool.m4
+/m4/ax_*.m4
+/m4/pkg.m4
+/aclocal.m4
+/ltmain.sh
+/libtool
+/install-sh
+/config.guess
+/config.h.in
+/config.sub
+/autom4te.cache/
+/compile
+/configure
+/config.*
+/depcomp
+/missing
+/test-driver
+/autom4te.cache/
+/INSTALL
+/README
+/ChangeLog
 
-# Configure-process generated files
+# Automake-added generated files
+/ar-lib
+Makefile.in
+
+# Configure-added generated files
 .deps/
 Makefile
 stamp-h1
 
-# Make-process generated files
+# Make-added generated files
 mkcg.6416
 mkcg.vid2k
 *.o
 *.lo
 *.a
 *.la
+
+# DejaGnu-added generated files
+/pcmtools.log
+/pcmtools.sum
+/site.exp
