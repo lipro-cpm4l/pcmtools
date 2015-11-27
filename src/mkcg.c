@@ -1,3 +1,24 @@
+/*
+ * Core functions to handle different PC/M character generator PROMs.
+ *
+ * Copyright (C) 2002-21015  Stephan Linz <linz@li-pro.net>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA  02110-1301, USA.
+ */
+
 #include "pcmtools.h"
 
 bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
@@ -25,8 +46,10 @@ bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
 			cnt = ~cg->exp_ch_max_color;
 			break;
 		}
-		else {
-			ch->dot_color_id = image->ncolors + 1; /* FIXME: overflow condition 255 -> 0 */
+		else {	/*
+			 * FIXME:1000 overflow condition 255 -> 0
+			 */
+			ch->dot_color_id = image->ncolors + 1;
 		}
 	}
 
