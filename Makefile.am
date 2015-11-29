@@ -38,9 +38,10 @@ doc_DATA       = ChangeLog ChangeLog-20050419
 README: README.md
 	$(AM_V_GEN)fgrep -v "[Build Status]" $<  > $@
 
-# Build changelog from git history
-GITLOG_DF = %Y-%m-%d
+# Git pritty format string for ChangeLog generator
 GITLOG_PF = %w(78,0,8)%ad  %an <%ae>%n%n* %w(78,0,10)%s [%h]%n
+
+# Build changelog from git history
 ChangeLog:
 	$(AM_V_GEN)if test -e $(top_srcdir)/.git; then \
 	  prev=$$(git --git-dir $(top_srcdir)/.git describe \
@@ -53,8 +54,7 @@ ChangeLog:
 	    echo "$$prev [$$(git --git-dir $(top_srcdir)/.git log \
 	                     $$prev -1 --pretty=format:'%ai')]:" ; \
 	    echo "" ; \
-	    git --git-dir $(top_srcdir)/.git log \
-	        --date=format:'$(GITLOG_DF)' \
+	    git --git-dir $(top_srcdir)/.git log --date=short \
 	        --pretty=format:'$(GITLOG_PF)' $$tag..$$prev ; \
 	    echo "" ; \
 	    prev=$$tag ; \
