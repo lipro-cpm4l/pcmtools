@@ -135,11 +135,7 @@ static void exit_func(int status, void *arg)
 int main(int argc, char **argv)
 {
 	unsigned int	cnt;
-	unsigned int	black;
 	int		status;
-	Pixmap		pixmap;
-	XpmImage	image;
-	XpmInfo		info;
 
 	CG.options	= OPT_MKCG_LEFTBOUND /* default not: OPT_MKCG_NEGATED */;
 	CG.progname	= argv[0];
@@ -155,7 +151,6 @@ int main(int argc, char **argv)
 	on_exit(exit_func, (void *)&CG);
 
 	while (1) {
-		int this_option_optind = optind ? optind : 1;
 		int option_index = 0;
 		int c;
 		static struct option long_options[] = {

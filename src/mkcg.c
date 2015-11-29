@@ -23,7 +23,7 @@
 
 bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
 {
-	int cnt;
+	unsigned int cnt;
 
 	if ((image->width != cg->exp_ch_width) || (image->height != cg->exp_ch_hight)) {
 		if (!(cg->options & OPT_MKCG_QUIET))
@@ -64,7 +64,7 @@ bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
 
 bool mkcg_out_banner(mkcg_cg *cg, mkcg_ch *ch)
 {
-	int	cnt_w, cnt_h, bit, bits;
+	unsigned int	cnt_w, cnt_h, bit, bits;
 
 	OUT("%s\n", "____________________");
 
@@ -98,7 +98,7 @@ bool mkcg_out_banner(mkcg_cg *cg, mkcg_ch *ch)
 
 bool mkcg_out_xxd(mkcg_cg *cg, mkcg_ch *ch, unsigned int addr)
 {
-	int	cnt, cnt_w, cnt_h, bit, bits, bytes;
+	unsigned int	cnt, cnt_w, cnt_h, bit, bits, bytes;
 
 	OUT("%07X: ", addr);
 
@@ -148,7 +148,6 @@ static void set_XpmColor(XpmColor *entry,
 		snprintf(buf, strlen(STR) + 1, "%s", STR); \
 		PTR = buf; \
 	}
-		//strncpy(buf, string, strlen(string));
 
 	CONCAT_AT_POINTER(entry->string, string);
 	CONCAT_AT_POINTER(entry->c_color, c_color);
@@ -196,7 +195,6 @@ bool mkcg_out_xpm(mkcg_cg *cg)
 						* pixel_in_row;
 	unsigned int	pixel_num	= pixel_in_cols * pixel_in_rows;
 	unsigned int	*pixeldata;
-	char		*buf;
 	XpmColor	*colortable;
 	XpmImage	image;
 

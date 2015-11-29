@@ -85,7 +85,7 @@ typedef struct {
 	unsigned int		exp_ch_width;
 	unsigned int		exp_ch_hight;
 	unsigned int		exp_ch_max_color;
-	const unsigned char	*exp_ch_dot_color;
+	const char		*exp_ch_dot_color;
 
 	size_t			number;
 	mkcg_ch			*ch;
