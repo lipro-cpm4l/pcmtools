@@ -35,15 +35,13 @@ dist_doc_DATA  = README README.md TODO
 doc_DATA       = ChangeLog ChangeLog-20050419
 
 # Build readme from markdown
-.PHONY: README
 README: README.md
 	$(AM_V_GEN)fgrep -v "[Build Status]" $<  > $@
 
 # Build changelog from git history
 GITLOG_DF = %Y-%m-%d
 GITLOG_PF = %w(78,0,8)%ad  %an <%ae>%n%n* %w(78,0,10)%s [%h]%n
-.PHONY: ChangeLog
-ChangeLog: $(top_srcdir)/.git
+ChangeLog:
 	$(AM_V_GEN)if test -e $(top_srcdir)/.git; then \
 	  prev=$$(git --git-dir $(top_srcdir)/.git describe \
 	              --tags --always --match '[0-9]*' 2> /dev/null) ; \
@@ -66,14 +64,17 @@ ChangeLog: $(top_srcdir)/.git
 	fi
 
 # Build todo from git controlled objects
-.PHONY: TODO
-TODO: $(top_srcdir)/.git
-	$(AM_V_GEN)git --git-dir $(top_srcdir)/.git ls-tree \
+TODO:
+	$(AM_V_GEN)if test -e $(top_srcdir)/.git; then \
+	  git --git-dir $(top_srcdir)/.git ls-tree \
 	  -r --name-only HEAD | xargs grep -nH "T[O]DO:\|FIX[M][E]:" | \
 	  sed 's/\([^:]*:[^:]*\):\(.*\)T[O]DO:\(.*\)/\3 (\1)/' | \
 	  sed 's/\([^:]*:[^:]*\):\(.*\)FIX[M][E]:\(.*\)/\3 (\1)/' | \
 	  grep -v '\$$(top_srcdir)/\.git' | sort -ns | \
-	  awk '(last != $$1) {print ""} {last=$$1 ; print}' > $@
+	  awk '(last != $$1) {print ""} {last=$$1 ; print}' > $@ ; \
+	else \
+	  touch $@ ; \
+	fi
 
 # release with paranoia backup to avoid debauched git repository
 rel__tar = ${AMTAR} cof - ".git"
