@@ -29,9 +29,7 @@ EXTRA_DIST =
 EXTRA_DIST +=				\
 	autogen.sh			\
 	tools/get-version		\
-	ChangeLog-20050419		\
-	pcmtools.test/mkcg.6416.exp	\
-	pcmtools.test/mkcg.vid2k.exp
+	ChangeLog-20050419
 
 dist_doc_DATA  = README README.md TODO
 doc_DATA       = ChangeLog ChangeLog-20050419

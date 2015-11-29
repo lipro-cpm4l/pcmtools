@@ -30,7 +30,10 @@
 /autom4te.cache/
 /INSTALL
 /README
+/TODO
 /ChangeLog
+/pcmtools.test/mkcg.6416.exp
+/pcmtools.test/mkcg.vid2k.exp
 
 # Automake-added generated files
 /ar-lib

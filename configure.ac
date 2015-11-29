@@ -252,6 +252,8 @@ AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
 	data/Makefile
+	pcmtools.test/mkcg.6416.exp
+	pcmtools.test/mkcg.vid2k.exp
 ])
 AC_OUTPUT
 
