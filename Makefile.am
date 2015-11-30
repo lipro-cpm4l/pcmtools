@@ -77,27 +77,23 @@ TODO:
 	fi
 
 # release with paranoia backup to avoid debauched git repository
-rel__tar = ${AMTAR} cof - ".git"
+rel__tar = ${AMTAR} cof - "$(top_srcdir)/.git"
 .PHONY: release
-release: $(top_srcdir)/.git
-	$(AM_V_GEN)$(rel__tar) | bzip2 -9 -c >.backup-gitmeta-$$(date +%s).tar.bz2 && \
+release: $(top_srcdir)/.git $(top_srcdir)/.dist-version
+	$(AM_V_GEN)$(rel__tar) | bzip2 -9 -c \
+	  >$(top_srcdir)/.backup-gitdir-$$(date +%s).tar.bz2 && \
 	touch configure.ac && \
 	$(MAKE)  $(AM_MAKEFLAGS) \
 	  top_distdir="$(top_distdir)" \
 	  distdir="$(distdir)" \
 	  distcheck && \
+	test -z "$$(git --git-dir $(top_srcdir)/.git status --porcelain)" && \
 	git --git-dir $(top_srcdir)/.git \
-	  commit -asm 'Prepare release $(PACKAGE_VERSION)' && \
+	  diff --quiet --ignore-submodules HEAD && \
 	git --git-dir $(top_srcdir)/.git \
-	  branch --no-track release/v$(PACKAGE_VERSION) && \
+	  branch --no-track release/$(PACKAGE_VERSION) && \
 	git --git-dir $(top_srcdir)/.git \
-	  tag -sm 'v$(PACKAGE_VERSION)' v$(PACKAGE_VERSION) && \
-	touch configure.ac && \
-	$(MAKE)  $(AM_MAKEFLAGS) \
-	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
-	  distcheck && \
-	git --git-dir $(top_srcdir)/.git \
-	  commit --amend -aC HEAD
+	  tag -sm 'Version $(PACKAGE_VERSION)' $(PACKAGE_VERSION)
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/config.guess \
