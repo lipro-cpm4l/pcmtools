@@ -1,8 +1,29 @@
+/*
+ * Core functions to handle different PC/M character generator PROMs.
+ *
+ * Copyright (C) 2002-21015  Stephan Linz <linz@li-pro.net>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA  02110-1301, USA.
+ */
+
 #include "pcmtools.h"
 
 bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
 {
-	int cnt;
+	unsigned int cnt;
 
 	if ((image->width != cg->exp_ch_width) || (image->height != cg->exp_ch_hight)) {
 		if (!(cg->options & OPT_MKCG_QUIET))
@@ -25,8 +46,10 @@ bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
 			cnt = ~cg->exp_ch_max_color;
 			break;
 		}
-		else {
-			ch->dot_color_id = image->ncolors + 1; /* FIXME: overflow condition 255 -> 0 */
+		else {	/*
+			 * FIXME:1000 overflow condition 255 -> 0
+			 */
+			ch->dot_color_id = image->ncolors + 1;
 		}
 	}
 
@@ -41,7 +64,7 @@ bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
 
 bool mkcg_out_banner(mkcg_cg *cg, mkcg_ch *ch)
 {
-	int	cnt_w, cnt_h, bit, bits;
+	unsigned int	cnt_w, cnt_h, bit, bits;
 
 	OUT("%s\n", "____________________");
 
@@ -75,7 +98,7 @@ bool mkcg_out_banner(mkcg_cg *cg, mkcg_ch *ch)
 
 bool mkcg_out_xxd(mkcg_cg *cg, mkcg_ch *ch, unsigned int addr)
 {
-	int	cnt, cnt_w, cnt_h, bit, bits, bytes;
+	unsigned int	cnt, cnt_w, cnt_h, bit, bits, bytes;
 
 	OUT("%07X: ", addr);
 
@@ -125,7 +148,6 @@ static void set_XpmColor(XpmColor *entry,
 		snprintf(buf, strlen(STR) + 1, "%s", STR); \
 		PTR = buf; \
 	}
-		//strncpy(buf, string, strlen(string));
 
 	CONCAT_AT_POINTER(entry->string, string);
 	CONCAT_AT_POINTER(entry->c_color, c_color);
@@ -173,7 +195,6 @@ bool mkcg_out_xpm(mkcg_cg *cg)
 						* pixel_in_row;
 	unsigned int	pixel_num	= pixel_in_cols * pixel_in_rows;
 	unsigned int	*pixeldata;
-	char		*buf;
 	XpmColor	*colortable;
 	XpmImage	image;
 

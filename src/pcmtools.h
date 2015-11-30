@@ -1,3 +1,24 @@
+/*
+ * Interface definition of the PC/M Tool Chain core functions.
+ *
+ * Copyright (C) 2002-21015  Stephan Linz <linz@li-pro.net>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA  02110-1301, USA.
+ */
+
 #include "config.h"
 #include <stdio.h>
 
@@ -64,7 +85,7 @@ typedef struct {
 	unsigned int		exp_ch_width;
 	unsigned int		exp_ch_hight;
 	unsigned int		exp_ch_max_color;
-	const unsigned char	*exp_ch_dot_color;
+	const char		*exp_ch_dot_color;
 
 	size_t			number;
 	mkcg_ch			*ch;
