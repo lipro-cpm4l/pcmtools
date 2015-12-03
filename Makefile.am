@@ -82,18 +82,18 @@ rel__tar = ${AMTAR} cof - "$(top_srcdir)/.git"
 release: $(top_srcdir)/.git $(top_srcdir)/.dist-version
 	$(AM_V_GEN)$(rel__tar) | bzip2 -9 -c \
 	  >$(top_srcdir)/.backup-gitdir-$$(date +%s).tar.bz2 && \
-	touch configure.ac && \
-	$(MAKE)  $(AM_MAKEFLAGS) \
-	  top_distdir="$(top_distdir)" \
-	  distdir="$(distdir)" \
-	  distcheck && \
 	test -z "$$(git --git-dir $(top_srcdir)/.git status --porcelain)" && \
 	git --git-dir $(top_srcdir)/.git \
 	  diff --quiet --ignore-submodules HEAD && \
 	git --git-dir $(top_srcdir)/.git \
 	  branch --no-track release/$(PACKAGE_VERSION) && \
 	git --git-dir $(top_srcdir)/.git \
-	  tag -sm 'Version $(PACKAGE_VERSION)' $(PACKAGE_VERSION)
+	  tag -sm 'Version $(PACKAGE_VERSION)' $(PACKAGE_VERSION) && \
+	touch configure.ac && \
+	$(MAKE) $(AM_MAKEFLAGS) \
+	  top_distdir="$(top_distdir)" \
+	  distdir="$(distdir)" \
+	  distcheck
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/config.guess \
