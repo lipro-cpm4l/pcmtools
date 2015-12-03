@@ -1,0 +1,24 @@
+The PC/M tool chain 1.1 source archive release includes numerous
+improvements that were made since the initial 1.0 source archive
+release.
+
+In addition to the list of changes below, many bug fixing and
+cleaning was performed across the tree.
+
+This release does maintain backward compatibility in all respects.
+In some cases, you may see output on stdout instead of stderr; or
+missing output completely, but without loosing compatibility.
+
+The following areas of PC/M tool chain functionality changed in
+this release:
+
+Build and Release:
+- Enable many binary hardening features.
+- Increased configuration and compilation warning coverage.
+- Use Autoconf 2.64 for configuration.
+- Use Automake 1.14 for compilation.
+- Use libtool 2.2 to produce helper library as a step toward to
+  "libmkcg".
+
+For more details about what has changed since 1.0, see the
+ChangeLog associated with this release.
