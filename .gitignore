@@ -1,4 +1,6 @@
 # temporary development files
+/.dist-version
+/.backup-gitmeta-*
 *~
 *.bak
 *.swp
