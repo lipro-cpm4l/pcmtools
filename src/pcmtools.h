@@ -46,13 +46,6 @@ typedef unsigned char _Bool;
 # define __bool_true_false_are_defined 1
 #endif
 
-#if HAVE_UNISTD_H && HAVE_GETOPT_H
-# include <unistd.h>
-# include <getopt.h>
-#else
-# error missing unistd.h or getopt.h
-#endif
-
 #if defined(HAVE_X11_XPM_H) && defined(HAVE_LIBXPM)
 # include <X11/xpm.h>
 #else
@@ -60,10 +53,28 @@ typedef unsigned char _Bool;
 #endif
 
 
-#define ERR(FORMAT,...) fprintf(stderr, "%s(): " FORMAT "\n", __FUNCTION__, __VA_ARGS__)
+#define ERR(FORMAT,...) fprintf(stderr, "%s:%d::%s(): " FORMAT "\n", \
+			__FILE__, __LINE__, __FUNCTION__, __VA_ARGS__)
 #define INF(FORMAT,...) fprintf(stderr, FORMAT "\n", __VA_ARGS__)
 #define OUT(FORMAT,...) fprintf(stdout, FORMAT, __VA_ARGS__)
 
+
+/* Exit status codes:
+ * null     if full success
+ * positive if partial success
+ * negative if failure
+ */
+#define PCMT_EXSTAT_XPM_CE	(XpmColorError)	/* XpmColorError = 1 */
+#define PCMT_EXSTAT_OK		(XpmSuccess)	/* XpmSuccess = 0 */
+#define PCMT_EXSTAT_XPM_OF	(XpmOpenFailed)	/* XpmOpenFailed = -1 */
+#define PCMT_EXSTAT_XPM_FI	(XpmFileInvalid)/* XpmFileInvalid = -2 */
+#define PCMT_EXSTAT_XPM_NM	(XpmNoMemory)	/* XpmNoMemory = -3 */
+#define PCMT_EXSTAT_XPM_CF	(XpmColorFailed)/* XpmColorFailed = -4 */
+#define PCMT_EXSTAT_WRONGOPT	(-10)
+#define PCMT_EXSTAT_NOFILES	(-11)
+#define PCMT_EXSTAT_NOMEM	(-12)
+#define PCMT_EXSTAT_CONVERR	(-13)
+#define PCMT_EXSTAT_CRITERR	(-20)
 
 typedef struct {
 
@@ -79,6 +90,7 @@ typedef struct {
 typedef struct {
 
 	char			*progname;
+	char			*description;
 
 	unsigned int		bound_bits;
 	unsigned int		bound_bytes;
@@ -109,6 +121,9 @@ typedef struct {
 
 } mkcg_cg;
 
+
+void mkcg_getopt(mkcg_cg *cg, int argc, char **argv);
+void mkcg_execopt(mkcg_cg *cg, int argc, char **argv);
 
 bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch);
 bool mkcg_out_banner(mkcg_cg *cg, mkcg_ch *ch);

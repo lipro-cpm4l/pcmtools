@@ -31,16 +31,13 @@ bin_PROGRAMS = mkcg.6416 mkcg.vid2k
 
 mkcg_6416_SOURCES = mkcg.6416.c
 mkcg_6416_LDADD = libmkcg.la
-mkcg_6416_CFLAGS = $(AM_CFLAGS) @XPM_CFLAGS@
-mkcg_6416_LDFLAGS = $(AM_LDFLAGS) @XPM_LIBS@
 
 mkcg_vid2k_SOURCES = mkcg.vid2k.c
 mkcg_vid2k_LDADD = libmkcg.la
-mkcg_vid2k_CFLAGS = $(AM_CFLAGS) @XPM_CFLAGS@
-mkcg_vid2k_LDFLAGS = $(AM_LDFLAGS) @XPM_LIBS@
 
-libmkcg_la_SOURCES = \
-	mkcg.c
+libmkcg_la_SOURCES = mkcg.c
+libmkcg_la_CFLAGS = $(AM_CFLAGS) @XPM_CFLAGS@
+libmkcg_la_LDFLAGS = $(AM_LDFLAGS) @XPM_LIBS@
 
 noinst_HEADERS = \
 	pcmtools.h

@@ -20,25 +20,25 @@
 #
 
 set test "package"
-spawn ./src/mkcg.6416
+spawn ./src/mkcg.6416 --version
 expect {
-  -re "^.*\\r\\nPackage: @PACKAGE@\\r\\n" {
+  -re "^.*mkcg.6416 \\(@PACKAGE@\\).*\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
 set test "version"
-spawn ./src/mkcg.6416
+spawn ./src/mkcg.6416 --version
 expect {
-  -re "^.*\\r\\nVersion: @VERSION@\\r\\n" {
+  -re "^.*mkcg.6416.*@VERSION@\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
 set test "provides"
-spawn ./src/mkcg.6416
+spawn ./src/mkcg.6416 --help
 expect {
   -re "^.*\\r\\noriginal PC/M 64x16 character generator PROM.*\\r\\n$" {
     pass "$test"
@@ -61,6 +61,16 @@ spawn ./src/mkcg.6416 --neg --hexdump \
       ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
 expect {
   -re "^0000000: C6 BA B2 AA 9A BA C6 FE \\r\\n$" {
+    pass "$test"
+  }
+  eof {fail "$test"}
+}
+
+set test "hexdump-wrong-data"
+spawn ./src/mkcg.6416 --hexdump \
+      ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
+expect {
+  -re "^.*: dimension validation: 8 x 10.*\\r\\n.*: internal conversion error\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
