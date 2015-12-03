@@ -30,6 +30,12 @@
 # error missing standard C headers
 #endif
 
+#if HAVE_UNISTD_H
+# include <unistd.h>
+#else
+# error missing POSIX operating system API
+#endif
+
 #if HAVE_STDBOOL_H
 # include <stdbool.h>
 #else
@@ -49,32 +55,15 @@ typedef unsigned char _Bool;
 #if defined(HAVE_X11_XPM_H) && defined(HAVE_LIBXPM)
 # include <X11/xpm.h>
 #else
-# error missing Xpm library
+# error missing Xpm library interface
 #endif
 
 
+#define OUT(FORMAT,...) fprintf(stdout, FORMAT, __VA_ARGS__)
+#define INF(FORMAT,...) fprintf(stderr, FORMAT "\n", __VA_ARGS__)
 #define ERR(FORMAT,...) fprintf(stderr, "%s:%d::%s(): " FORMAT "\n", \
 			__FILE__, __LINE__, __FUNCTION__, __VA_ARGS__)
-#define INF(FORMAT,...) fprintf(stderr, FORMAT "\n", __VA_ARGS__)
-#define OUT(FORMAT,...) fprintf(stdout, FORMAT, __VA_ARGS__)
 
-
-/* Exit status codes:
- * null     if full success
- * positive if partial success
- * negative if failure
- */
-#define PCMT_EXSTAT_XPM_CE	(XpmColorError)	/* XpmColorError = 1 */
-#define PCMT_EXSTAT_OK		(XpmSuccess)	/* XpmSuccess = 0 */
-#define PCMT_EXSTAT_XPM_OF	(XpmOpenFailed)	/* XpmOpenFailed = -1 */
-#define PCMT_EXSTAT_XPM_FI	(XpmFileInvalid)/* XpmFileInvalid = -2 */
-#define PCMT_EXSTAT_XPM_NM	(XpmNoMemory)	/* XpmNoMemory = -3 */
-#define PCMT_EXSTAT_XPM_CF	(XpmColorFailed)/* XpmColorFailed = -4 */
-#define PCMT_EXSTAT_WRONGOPT	(-10)
-#define PCMT_EXSTAT_NOFILES	(-11)
-#define PCMT_EXSTAT_NOMEM	(-12)
-#define PCMT_EXSTAT_CONVERR	(-13)
-#define PCMT_EXSTAT_CRITERR	(-20)
 
 typedef struct {
 
