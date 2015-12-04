@@ -34,18 +34,20 @@ EXTRA_DIST +=				\
 dist_doc_DATA  = README README.md TODO
 doc_DATA       = ChangeLog ChangeLog-20050419
 
+if BUILD_FROM_GIT
 # Build readme from markdown
 README: README.md
 	$(AM_V_GEN)fgrep -v "[Build Status]" $<  > $@
+endif
 
+if BUILD_FROM_GIT
 # Git pritty format string for ChangeLog generator
 GITLOG_PF = %w(78,0,8)%ad  %an <%ae>%n%n* %w(78,0,10)%s [%h]%n
 
 # Build changelog from git history
 ChangeLog:
-	$(AM_V_GEN)if test -e $(top_srcdir)/.git; then \
-	  prev=$$(git --git-dir $(top_srcdir)/.git describe \
-	              --tags --always --match '[0-9]*' 2> /dev/null) ; \
+	$(AM_V_GEN)prev=$$(git --git-dir $(top_srcdir)/.git describe \
+	                   --tags --always --match '[0-9]*' 2> /dev/null) ; \
 	  for tag in $$(git --git-dir $(top_srcdir)/.git tag | \
 	                $(EGREP) '^[0-9]+(\.[0-9]+){1,}$$' | \
 	                sort -t. -k 1,1nr -k 2,2nr -k 3,3nr); do \
@@ -58,28 +60,27 @@ ChangeLog:
 	        --pretty=format:'$(GITLOG_PF)' $$tag..$$prev ; \
 	    echo "" ; \
 	    prev=$$tag ; \
-	  done > $@ ; \
-	else \
-	  touch $@ ; \
-	fi
+	  done > $@
+endif
 
 # Build todo from git controlled objects
+if BUILD_FROM_GIT
 TODO:
-	$(AM_V_GEN)if test -e $(top_srcdir)/.git; then \
-	  git --git-dir $(top_srcdir)/.git ls-tree \
+	$(AM_V_GEN)git --git-dir $(top_srcdir)/.git ls-tree \
 	  -r --name-only HEAD | xargs grep -nH "T[O]DO:\|FIX[M][E]:" | \
 	  sed 's/\([^:]*:[^:]*\):\(.*\)T[O]DO:\(.*\)/\3 (\1)/' | \
 	  sed 's/\([^:]*:[^:]*\):\(.*\)FIX[M][E]:\(.*\)/\3 (\1)/' | \
 	  grep -v '\$$(top_srcdir)/\.git' | sort -ns | \
-	  awk '(last != $$1) {print ""} {last=$$1 ; print}' > $@ ; \
-	else \
-	  touch $@ ; \
-	fi
+	  awk '(last != $$1) {print ""} {last=$$1 ; print}' > $@
+endif
+
+if BUILD_FROM_GIT
+# Tar backup command line string for release generator
+rel__tar = ${AMTAR} cof - "$(top_srcdir)/.git"
 
 # release with paranoia backup to avoid debauched git repository
-rel__tar = ${AMTAR} cof - "$(top_srcdir)/.git"
 .PHONY: release
-release: $(top_srcdir)/.git $(top_srcdir)/.dist-version
+release: $(top_srcdir)/.dist-version
 	$(AM_V_GEN)$(rel__tar) | bzip2 -9 -c \
 	  >$(top_srcdir)/.backup-gitdir-$$(date +%s).tar.bz2 && \
 	test -z "$$(git --git-dir $(top_srcdir)/.git status --porcelain)" && \
@@ -94,6 +95,7 @@ release: $(top_srcdir)/.git $(top_srcdir)/.dist-version
 	  top_distdir="$(top_distdir)" \
 	  distdir="$(distdir)" \
 	  distcheck
+endif
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/aclocal.m4 \

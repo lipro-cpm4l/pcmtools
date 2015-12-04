@@ -262,6 +262,10 @@ sys_libs="${LIBS}"
 
 AC_CACHE_SAVE
 
+dnl Are we building from git checked-out sources, or a tarball ?
+dnl This is used in "Makefile.am" to avoid re-generating distfiles
+AM_CONDITIONAL([BUILD_FROM_GIT], [test -e "$srcdir/.git"])
+
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
