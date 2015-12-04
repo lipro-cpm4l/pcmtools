@@ -26,12 +26,12 @@ dnl *** Configure autoconf
 dnl *************************************************************************
 AC_PREREQ([2.64])
 AC_INIT([PC/M Tools],
-	[m4_esyscmd_s([./build-aux/get-version])],
+	[m4_esyscmd_s([./aux/get-version])],
 	[pcmtools-bug@li-pro.net],
 	[pcmtools],
 	[https://github.com/lipro/pcmtools/])
 
-AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_AUX_DIR([aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/mkcg_cli.c])
 AC_CONFIG_HEADERS([config.h:config.in])dnl Keep filename to 8.3 for MS-DOS.
