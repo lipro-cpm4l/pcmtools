@@ -121,8 +121,6 @@ Copyright (C) 2002-%d %s\n\
 License: GNU GPL v2+ <http://www.gnu.org/licenses/gpl.html>\n\
 This is free software.  There is NO WARRANTY, to the extent permitted by law.\n",
               COPYRIGHT_YEAR, "Li-Pro.Net");
-	OUT("\n\
-Written by: %s\n", "Stephan Linz <linz@li-pro.net>");
 }
 
 /* Exit status codes:
