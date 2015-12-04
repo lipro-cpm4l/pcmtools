@@ -117,10 +117,10 @@ static void _mkcg_print_version(mkcg_cg *cg)
 	 * as done here, to avoid having to retranslate the message when a new
 	 * year comes around.  */
 	OUT("\
-Copyright (C) %s %s\n\
+Copyright (C) 2002-%d %s\n\
 License: GNU GPL v2+ <http://www.gnu.org/licenses/gpl.html>\n\
 This is free software.  There is NO WARRANTY, to the extent permitted by law.\n",
-              "2002-2015", "Li-Pro.Net");
+              COPYRIGHT_YEAR, "Li-Pro.Net");
 	OUT("\n\
 Written by: %s\n", "Stephan Linz <linz@li-pro.net>");
 }

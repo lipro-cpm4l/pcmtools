@@ -271,6 +271,10 @@ sys_libs="${LIBS}"
 
 AC_CACHE_SAVE
 
+dnl Copyright will apply as long as these sources are in use, e.g., are
+dnl being compiled, which is reasonable year to claim the copyright.
+AC_DEFINE([COPYRIGHT_YEAR], [m4_esyscmd([date +%Y])], [year in copyright message])
+
 dnl Are we building from git checked-out sources, or a tarball ?
 dnl This is used in "Makefile.am" to avoid re-generating distfiles
 AM_CONDITIONAL([BUILD_FROM_GIT], [test -e "$srcdir/.git"])
