@@ -67,7 +67,9 @@ endif
 if BUILD_FROM_GIT
 TODO:
 	$(AM_V_GEN)git --git-dir $(top_srcdir)/.git ls-tree \
-	  -r --name-only HEAD | xargs grep -nH "T[O]DO:\|FIX[M][E]:" | \
+	  -r --name-only HEAD | grep -v '^Makefile\.am' | \
+	  sed 's/^/$(top_srcdir)\//g' | \
+	  xargs grep -nH "T[O]DO:\|FIX[M][E]:" | \
 	  sed 's/\([^:]*:[^:]*\):\(.*\)T[O]DO:\(.*\)/\3 (\1)/' | \
 	  sed 's/\([^:]*:[^:]*\):\(.*\)FIX[M][E]:\(.*\)/\3 (\1)/' | \
 	  grep -v '\$$(top_srcdir)/\.git' | sort -ns | \

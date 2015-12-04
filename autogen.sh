@@ -126,11 +126,6 @@ ${AUTORECONF} -I m4 --install --force --warnings=all || {
     done
 }
 
-banner "well known issues to work on"
-
-eval $(${MAKE} -n -f Makefile.am top_srcdir=. TODO | \
-       sed -e 's/\\\s*$//g' -e 's/\s*>\s*TODO\s*$//g')
-
 banner "finished - for the next step, run ./configure"
 
 exit 0
