@@ -81,6 +81,15 @@ AM_PROG_INSTALL_STRIP
 AC_PROG_LN_S
 AC_PROG_EGREP
 
+dnl GNU help2man creates man pages from --help output; in many cases, this
+dnl is sufficient, and obviates the need to maintain man pages separately.
+AC_PROG_HELP2MAN
+
+dnl However, this means invoking executables, which we generally cannot do
+dnl when cross-compiling, so we test to avoid that (the variable
+dnl "cross_compiling" is set by AC_PROG_CC).
+AS_IF([test $cross_compiling = yes],[HELP2MAN=:])
+
 dnl *************************************************************************
 dnl *** Check some preprocessor flags.
 dnl *************************************************************************
