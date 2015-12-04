@@ -13,12 +13,12 @@
 # Autotools-added generated files
 /aclocal.m4
 /autom4te.cache/
-/aux/compile
-/aux/config.*
-/aux/depcomp
-/aux/install-sh
-/aux/ltmain.sh
-/aux/missing
+/acx/compile
+/acx/config.*
+/acx/depcomp
+/acx/install-sh
+/acx/ltmain.sh
+/acx/missing
 /configure
 /config.*
 /libtool
@@ -32,7 +32,7 @@
 /ChangeLog
 
 # Automake-added generated files
-/aux/ar-lib
+/acx/ar-lib
 Makefile.in
 
 # Configure-added generated files

@@ -39,7 +39,7 @@ banner() {
 set -e
 
 chmod +x $0
-chmod +x ./aux/get-version
+chmod +x ./acx/get-version
 
 [ ! -f .gitmodules ] || {
 	banner "updating git submodules"

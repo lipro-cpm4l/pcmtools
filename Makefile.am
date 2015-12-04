@@ -28,7 +28,7 @@ SUBDIRS = src man data
 
 EXTRA_DIST +=				\
 	autogen.sh			\
-	aux/get-version			\
+	acx/get-version			\
 	ChangeLog-20050419
 
 dist_doc_DATA  = README README.md TODO
@@ -101,13 +101,13 @@ endif
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/aclocal.m4 \
-	$(srcdir)/aux/ar-lib \
-	$(srcdir)/aux/compile \
-	$(srcdir)/aux/config.* \
-	$(srcdir)/aux/depcomp \
-	$(srcdir)/aux/install-sh \
-	$(srcdir)/aux/ltmain.sh \
-	$(srcdir)/aux/missing \
+	$(srcdir)/acx/ar-lib \
+	$(srcdir)/acx/compile \
+	$(srcdir)/acx/config.* \
+	$(srcdir)/acx/depcomp \
+	$(srcdir)/acx/install-sh \
+	$(srcdir)/acx/ltmain.sh \
+	$(srcdir)/acx/missing \
 	$(srcdir)/configure \
 	$(srcdir)/configure.ac~ \
 	$(srcdir)/config.in \
