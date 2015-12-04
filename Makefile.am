@@ -21,11 +21,11 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-AUTOMAKE_OPTIONS = dejagnu
+EXTRA_DIST =
+CLEANFILES =
 
 SUBDIRS = src man data
 
-EXTRA_DIST =
 EXTRA_DIST +=				\
 	autogen.sh			\
 	aux/get-version			\

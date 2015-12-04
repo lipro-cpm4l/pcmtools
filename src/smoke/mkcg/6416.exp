@@ -20,25 +20,25 @@
 #
 
 set test "package"
-spawn ./src/mkcg.6416 --version
+spawn ${objdir}/mkcg.6416 --version
 expect {
-  -re "^.*mkcg.6416 \\(@PACKAGE@\\).*\\r\\n" {
+  -re "^.*mkcg\\.6416 \\(pcmtools\\).*\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
 set test "version"
-spawn ./src/mkcg.6416 --version
+spawn ${objdir}/mkcg.6416 --version
 expect {
-  -re "^.*mkcg.6416.*@VERSION@\\r\\n" {
+  -re "^.*mkcg\\.6416.*1\\.1.*\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}
 }
 
 set test "provides"
-spawn ./src/mkcg.6416 --help
+spawn ${objdir}/mkcg.6416 --help
 expect {
   -re "^.*\\r\\noriginal PC/M 64x16 character generator PROM.*\\r\\n$" {
     pass "$test"
@@ -47,8 +47,8 @@ expect {
 }
 
 set test "hexdump-single"
-spawn ./src/mkcg.6416 --hexdump \
-      ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
+spawn ${objdir}/mkcg.6416 --hexdump \
+      ${srcdir}/data/6416_30.xpm
 expect {
   -re "^0000000: 38 44 4C 54 64 44 38 00 \\r\\n" {
     pass "$test"
@@ -57,8 +57,8 @@ expect {
 }
 
 set test "hexdump-single-negated"
-spawn ./src/mkcg.6416 --neg --hexdump \
-      ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
+spawn ${objdir}/mkcg.6416 --neg --hexdump \
+      ${srcdir}/data/6416_30.xpm
 expect {
   -re "^0000000: C6 BA B2 AA 9A BA C6 FE \\r\\n$" {
     pass "$test"
@@ -67,8 +67,8 @@ expect {
 }
 
 set test "hexdump-wrong-data"
-spawn ./src/mkcg.6416 --hexdump \
-      ${srcdir}/data/CG_VID2K/original/ascii_0x30.xpm
+spawn ${objdir}/mkcg.6416 --hexdump \
+      ${srcdir}/data/vid2k_30.xpm
 expect {
   -re "^.*: dimension validation: 8 x 10.*\\r\\n.*: internal conversion error\\r\\n" {
     pass "$test"
@@ -76,9 +76,9 @@ expect {
   eof {fail "$test"}
 }
 
-set test "overview-original-ascii-0x30"
-spawn ./src/mkcg.6416 --quiet --overview=32 \
-      ${srcdir}/data/CG_6416/original/ascii_0x30.xpm
+set test "overview-sample-30"
+spawn ${objdir}/mkcg.6416 --quiet --overview=32 \
+      ${srcdir}/data/6416_30.xpm
 expect {
   -re "^/\\* XPM \\*/\\r\\n.*\\r\\n.*\"224 8 4 1\",\\r\\n.*\\r\\n$" {
     pass "$test"

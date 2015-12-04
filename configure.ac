@@ -282,11 +282,9 @@ AM_CONDITIONAL([CROSS_COMPILING_FROM_GIT],
 
 AC_CONFIG_FILES([
 	Makefile
-	src/Makefile
-	man/Makefile
 	data/Makefile
-	pcmtools.test/mkcg.6416.exp
-	pcmtools.test/mkcg.vid2k.exp
+	man/Makefile
+	src/Makefile
 ])
 AC_OUTPUT
 
