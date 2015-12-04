@@ -41,7 +41,7 @@ $(top_builddir)/src/mkcg.%$(EXEEXT): 	$(top_srcdir)/src/mkcg_cmd_%.c \
 					$(top_srcdir)/configure.ac
 	$(AM_V_GEN)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
 
-mkcg.%.1: $(top_builddir)/src/mkcg.%$(EXEEXT)
+mkcg.%.1: $(top_builddir)/src/mkcg.%$(EXEEXT) mkcg.%.x
 	$(AM_V_GEN)$(HELP2MAN) $(HELP2MANFLAGS) \
 	  -i $(srcdir)/$(patsubst %$(EXEEXT),%,$(<F)).x \
 	  $(top_builddir)/src/$(<F) -o $@

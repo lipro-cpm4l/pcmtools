@@ -1,2 +1,2 @@
 [NAME]
-mkcg.6416 - make character generator PROM for the PC/M VID2k
+mkcg.vid2k - make character generator PROM for the PC/M VID2k
