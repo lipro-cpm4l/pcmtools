@@ -16,7 +16,7 @@ Build and Release:
 - Enable many binary hardening features.
 - Increased configuration and compilation warning coverage.
 - Use Autoconf 2.64 for configuration.
-- Use Automake 1.14 for compilation.
+- Use Automake 1.11 for compilation.
 - Use libtool 2.2 to produce helper library as a step toward to
   "libmkcg".
 
