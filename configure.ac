@@ -275,9 +275,15 @@ dnl Are we building from git checked-out sources, or a tarball ?
 dnl This is used in "Makefile.am" to avoid re-generating distfiles
 AM_CONDITIONAL([BUILD_FROM_GIT], [test -e "$srcdir/.git"])
 
+dnl This is used in "Makefile.am" to avoid execute cross compiled
+dnl binaries where re-generating distfiles
+AM_CONDITIONAL([CROSS_COMPILING_FROM_GIT],
+               [test -e "$srcdir/.git" && test $cross_compiling = yes])
+
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
+	man/Makefile
 	data/Makefile
 	pcmtools.test/mkcg.6416.exp
 	pcmtools.test/mkcg.vid2k.exp

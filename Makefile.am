@@ -23,7 +23,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 AUTOMAKE_OPTIONS = dejagnu
 
-SUBDIRS = src data
+SUBDIRS = src man data
 
 EXTRA_DIST =
 EXTRA_DIST +=				\

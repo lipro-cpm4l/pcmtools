@@ -44,6 +44,8 @@ Makefile
 stamp-h1
 
 # Make-added generated files
+mkcg.6416.1
+mkcg.vid2k.1
 mkcg.6416
 mkcg.vid2k
 *.o
