@@ -21,23 +21,37 @@
 
 # use autogen.sh
 
+dnl *************************************************************************
+dnl *** Configure autoconf
+dnl *************************************************************************
 AC_PREREQ([2.64])
 AC_INIT([PC/M Tools],
-	[m4_esyscmd_s([./tools/get-version])],
+	[m4_esyscmd_s([./build-aux/get-version])],
 	[pcmtools-bug@li-pro.net],
 	[pcmtools],
 	[https://github.com/lipro/pcmtools/])
 
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_SRCDIR([src/mkcg_cli.c])
+AC_CONFIG_HEADERS([config.h:config.in])dnl Keep filename to 8.3 for MS-DOS.
+
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
-AC_CONFIG_SRCDIR([src/mkcg_cli.c])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
-
 AC_USE_SYSTEM_EXTENSIONS
 
-AM_INIT_AUTOMAKE([-Wall -Wno-portability dist-bzip2 dist-zip subdir-objects])
+dnl *************************************************************************
+dnl *** Configure automake
+dnl *************************************************************************
+AM_INIT_AUTOMAKE([
+	1.14
+	-Wall
+	-Wno-portability
+	dist-bzip2
+	dist-zip
+	subdir-objects
+])
 AM_MAINTAINER_MODE
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES(yes)])
 m4_pattern_allow([AM_PROG_AR])

@@ -28,7 +28,7 @@ SUBDIRS = src data
 EXTRA_DIST =
 EXTRA_DIST +=				\
 	autogen.sh			\
-	tools/get-version		\
+	build-aux/get-version		\
 	ChangeLog-20050419
 
 dist_doc_DATA  = README README.md TODO
@@ -96,25 +96,24 @@ release: $(top_srcdir)/.git $(top_srcdir)/.dist-version
 	  distcheck
 
 MAINTAINERCLEANFILES = \
-	$(srcdir)/config.guess \
-	$(srcdir)/config.sub \
-	$(srcdir)/install-sh \
-	$(srcdir)/ltmain.sh \
+	$(srcdir)/aclocal.m4 \
+	$(srcdir)/build-aux/ar-lib \
+	$(srcdir)/build-aux/compile \
+	$(srcdir)/build-aux/config.* \
+	$(srcdir)/build-aux/depcomp \
+	$(srcdir)/build-aux/install-sh \
+	$(srcdir)/build-aux/ltmain.sh \
+	$(srcdir)/build-aux/missing \
+	$(srcdir)/configure \
+	$(srcdir)/configure.ac~ \
+	$(srcdir)/config.in \
+	$(srcdir)/config.in~ \
+	$(srcdir)/m4/ax_*.m4 \
 	$(srcdir)/m4/libtool.m4 \
 	$(srcdir)/m4/lt*.m4 \
-	$(srcdir)/m4/ax_*.m4 \
 	$(srcdir)/m4/pkg.m4 \
-	$(srcdir)/aclocal.m4 \
-	$(srcdir)/ar-lib \
-	$(srcdir)/compile \
-	$(srcdir)/missing \
-	$(srcdir)/depcomp \
+	$(srcdir)/Makefile.in \
 	$(srcdir)/INSTALL \
 	$(srcdir)/README \
 	$(srcdir)/ChangeLog \
-	$(srcdir)/TODO \
-	$(srcdir)/configure \
-	$(srcdir)/configure.ac~ \
-	$(srcdir)/config.h.in \
-	$(srcdir)/config.h.in~ \
-	$(srcdir)/Makefile.in
+	$(srcdir)/TODO

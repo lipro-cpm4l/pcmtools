@@ -11,34 +11,31 @@
 *.zip
 
 # Autotools-added generated files
-/m4/lt*.m4
-/m4/libtool.m4
-/m4/ax_*.m4
-/m4/pkg.m4
 /aclocal.m4
-/ltmain.sh
-/libtool
-/install-sh
-/config.guess
-/config.h.in
-/config.sub
 /autom4te.cache/
-/compile
+/build-aux/compile
+/build-aux/config.*
+/build-aux/depcomp
+/build-aux/install-sh
+/build-aux/ltmain.sh
+/build-aux/missing
 /configure
 /config.*
-/depcomp
-/missing
+/libtool
+/m4/ax_*.m4
+/m4/libtool.m4
+/m4/lt*.m4
+/m4/pkg.m4
+/pcmtools.test/mkcg.6416.exp
+/pcmtools.test/mkcg.vid2k.exp
 /test-driver
-/autom4te.cache/
 /INSTALL
 /README
 /TODO
 /ChangeLog
-/pcmtools.test/mkcg.6416.exp
-/pcmtools.test/mkcg.vid2k.exp
 
 # Automake-added generated files
-/ar-lib
+/build-aux/ar-lib
 Makefile.in
 
 # Configure-added generated files
