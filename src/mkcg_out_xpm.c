@@ -1,7 +1,7 @@
 /*
  * Core functions to handle different PC/M character generator PROMs.
  *
- * Copyright (C) 2002-21015  Stephan Linz <linz@li-pro.net>
+ * Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,125 +21,7 @@
 
 #include "pcmtools.h"
 
-bool mkcg_isvalidch(XpmImage *image, mkcg_cg *cg, mkcg_ch *ch)
-{
-	unsigned int cnt;
-
-	if ((image->width != cg->exp_ch_width) || (image->height != cg->exp_ch_hight)) {
-		if (!(cg->options & OPT_MKCG_QUIET))
-			ERR("dimension validation: %d x %d (%d x %d expected)",
-					image->width, image->height,
-					cg->exp_ch_width, cg->exp_ch_hight);
-		return false;
-	}
-
-	if (image->ncolors > cg->exp_ch_max_color) {
-		if (!(cg->options & OPT_MKCG_QUIET))
-			ERR("too many colors: %d colors (%d colors expected)",
-					image->ncolors, cg->exp_ch_max_color);
-		return false;
-	}
-
-	for (cnt = 0; cnt < image->ncolors; cnt++) {
-		if (strcmp(cg->exp_ch_dot_color, image->colorTable[cnt].c_color) == 0) {
-			ch->dot_color_id = cnt;
-			cnt = ~cg->exp_ch_max_color;
-			break;
-		}
-		else {	/*
-			 * FIXME:1000 overflow condition 255 -> 0
-			 */
-			ch->dot_color_id = image->ncolors + 1;
-		}
-	}
-
-	if ((cnt != ~cg->exp_ch_max_color) && (image->ncolors != cg->exp_ch_max_color - 1)) {
-		if (!(cg->options & OPT_MKCG_QUIET))
-			ERR("missing dot color: %s expected", cg->exp_ch_dot_color);
-		return false;
-	}
-
-	return true;
-}
-
-bool mkcg_out_banner(mkcg_cg *cg, mkcg_ch *ch)
-{
-	unsigned int	cnt_w, cnt_h, bit, bits;
-
-	OUT("%s\n", "____________________");
-
-	for (cnt_h = 0; cnt_h < ch->image.height; cnt_h++) {
-
-		OUT("%s", "|");
-
-		for (cnt_w = bits = 0; cnt_w < ch->image.width; cnt_w++) {
-
-			bit = (ch->image.data[cnt_h * ch->image.width + cnt_w]
-					== ch->dot_color_id) ? 1 : 0;
-
-			OUT("%s", bit	? cg->options & OPT_MKCG_INVERSE ? " " : "#"
-					: cg->options & OPT_MKCG_INVERSE ? "#" : " ");
-
-			bits += bit;
-			bits <<= 1;
-
-		}
-
-		bits >>= 1;
-		bits = cg->options & OPT_MKCG_NEGATED ? ~bits : bits;
-		bits &= (1 << cg->bound_bits) - 1;
-
-		OUT("|  0x%02X\n", cg->options & OPT_MKCG_LEFTBOUND ? (bits << (8 - cg->bound_bits)) : bits);
-
-	}
-
-	return true;
-}
-
-bool mkcg_out_xxd(mkcg_cg *cg, mkcg_ch *ch, unsigned int addr)
-{
-	unsigned int	cnt, cnt_w, cnt_h, bit, bits, bytes;
-
-	OUT("%07X: ", addr);
-
-	bytes = 0;
-
-	for (cnt_h = 0; cnt_h < ch->image.height; cnt_h++) {
-
-		for (cnt_w = bits = 0; cnt_w < ch->image.width; cnt_w++) {
-
-			bit = (ch->image.data[cnt_h * ch->image.width + cnt_w]
-					== ch->dot_color_id) ? 1 : 0;
-			bits += bit;
-			bits <<= 1;
-
-		}
-
-		bytes++;
-
-		bits >>= 1;
-		bits = cg->options & OPT_MKCG_NEGATED ? ~bits : bits;
-		bits &= (1 << cg->bound_bits) - 1;
-
-		OUT("%02X ", cg->options & OPT_MKCG_LEFTBOUND ? (bits << (8 - cg->bound_bits)) : bits);
-
-	}
-
-	for (cnt = 0; cnt < cg->bound_bytes - bytes; cnt++) {
-
-		bits = cg->options & OPT_MKCG_NEGATED ? ~0 : 0;
-		bits &= (1 << cg->bound_bits) - 1;
-
-		OUT("%02X ", cg->options & OPT_MKCG_LEFTBOUND ? (bits << (8 - cg->bound_bits)) : bits);
-
-	}
-
-	OUT("%s", "\n");
-
-	return true;
-}
-
-static void set_XpmColor(XpmColor *entry,
+static void _mkcg_SetXpmColor(XpmColor *entry,
 		const char *string, const char *c_color)
 {
 #define CONCAT_AT_POINTER(PTR,STR) { \
@@ -160,7 +42,7 @@ static void set_XpmColor(XpmColor *entry,
 #undef CONCAT_AT_POINTER
 }
 
-static void unset_XpmColor(XpmColor *entry)
+static void _mkcg_UnsetXpmColor(XpmColor *entry)
 {
 #define FREE_AT_POINTER(PNT)	if (PNT) free(PNT)
 	if (entry) {
@@ -206,15 +88,15 @@ bool mkcg_out_xpm(mkcg_cg *cg)
 	memset((void *)&image, 0, sizeof(image));
 
 	if (cg->options & OPT_MKCG_INVERSE) {
-		set_XpmColor(&colortable[COLID_DOT],	" ", "None");
-		set_XpmColor(&colortable[COLID_NONE],	"#", "#000000");
+		_mkcg_SetXpmColor(&colortable[COLID_DOT],	" ", "None");
+		_mkcg_SetXpmColor(&colortable[COLID_NONE],	"#", "#000000");
 	}
 	else {
-		set_XpmColor(&colortable[COLID_NONE],	" ", "None");
-		set_XpmColor(&colortable[COLID_DOT],	"#", "#000000");
+		_mkcg_SetXpmColor(&colortable[COLID_NONE],	" ", "None");
+		_mkcg_SetXpmColor(&colortable[COLID_DOT],	"#", "#000000");
 	}
-	set_XpmColor(&colortable[COLID_BORDER],	"|", "#FF0000");
-	set_XpmColor(&colortable[COLID_UNDEF],	"_", "#FFFF00");
+	_mkcg_SetXpmColor(&colortable[COLID_BORDER],	"|", "#FF0000");
+	_mkcg_SetXpmColor(&colortable[COLID_UNDEF],	"_", "#FFFF00");
 
 	if (cg->options & OPT_MKCG_VERBOSE) {
 		INF("cols:\t\t%d ", cols);
@@ -269,9 +151,9 @@ bool mkcg_out_xpm(mkcg_cg *cg)
 
 	XpmWriteFileFromXpmImage(filename, &image, NULL);
 
-	unset_XpmColor(&colortable[0]);
-	unset_XpmColor(&colortable[1]);
-	unset_XpmColor(&colortable[2]);
+	_mkcg_UnsetXpmColor(&colortable[0]);
+	_mkcg_UnsetXpmColor(&colortable[1]);
+	_mkcg_UnsetXpmColor(&colortable[2]);
 
 	if (colortable) free(colortable);
 

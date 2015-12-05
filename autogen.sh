@@ -3,7 +3,7 @@
 #
 # Autotools bootstrap script for top source directory
 #
-# Copyright (C) 21015  Stephan Linz <linz@li-pro.net>
+# Copyright (C) 2015  Stephan Linz <linz@li-pro.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ banner() {
 set -e
 
 chmod +x $0
-chmod +x ./tools/get-version
+chmod +x ./acx/get-version
 
 [ ! -f .gitmodules ] || {
 	banner "updating git submodules"
@@ -125,11 +125,6 @@ ${AUTORECONF} -I m4 --install --force --warnings=all || {
 	(cd "$dir" && ${AUTOMAKE} --add-missing --copy --force-missing)
     done
 }
-
-banner "well known issues to work on"
-
-eval $(${MAKE} -n -f Makefile.am top_srcdir=. TODO | \
-       sed -e 's/\\\s*$//g' -e 's/\s*>\s*TODO\s*$//g')
 
 banner "finished - for the next step, run ./configure"
 

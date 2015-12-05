@@ -11,34 +11,28 @@
 *.zip
 
 # Autotools-added generated files
-/m4/lt*.m4
-/m4/libtool.m4
-/m4/ax_*.m4
-/m4/pkg.m4
 /aclocal.m4
-/ltmain.sh
-/libtool
-/install-sh
-/config.guess
-/config.h.in
-/config.sub
 /autom4te.cache/
-/compile
+/acx/compile
+/acx/config.*
+/acx/depcomp
+/acx/install-sh
+/acx/ltmain.sh
+/acx/missing
 /configure
 /config.*
-/depcomp
-/missing
-/test-driver
-/autom4te.cache/
+/libtool
+/m4/ax_*.m4
+/m4/libtool.m4
+/m4/lt*.m4
+/m4/pkg.m4
 /INSTALL
 /README
 /TODO
 /ChangeLog
-/pcmtools.test/mkcg.6416.exp
-/pcmtools.test/mkcg.vid2k.exp
 
 # Automake-added generated files
-/ar-lib
+/acx/ar-lib
 Makefile.in
 
 # Configure-added generated files
@@ -48,13 +42,16 @@ stamp-h1
 
 # Make-added generated files
 mkcg.6416
+mkcg.6416.1
 mkcg.vid2k
+mkcg.vid2k.1
 *.o
 *.lo
 *.a
 *.la
 
 # DejaGnu-added generated files
-/pcmtools.log
-/pcmtools.sum
-/site.exp
+/src/mkcg.log
+/src/mkcg.sum
+/src/mkcg.xml
+/src/site.exp

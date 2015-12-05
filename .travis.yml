@@ -8,4 +8,5 @@ before_install:
   - sudo apt-get install -y autoconf-archive
   - sudo apt-get install -y libxpm-dev
   - sudo apt-get install -y dejagnu
+  - sudo apt-get install -y help2man
 script: ./configure && make distcheck

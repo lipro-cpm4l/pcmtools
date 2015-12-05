@@ -1,7 +1,7 @@
 #
 # Automake definitions for src/
 #
-# Copyright (C) 2002-21015  Stephan Linz <linz@li-pro.net>
+# Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,7 +21,27 @@
 
 AM_CPPFLAGS = -I$(top_srcdir)/src
 
-check_PROGRAMS = 			\
+EXTRA_DIST =
+CLEANFILES =
+
+AUTOMAKE_OPTIONS = dejagnu
+
+EXTRA_DIST +=				\
+	smoke/mkcg/6416.exp		\
+	smoke/data/6416_30.xpm		\
+	smoke/mkcg/vid2k.exp		\
+	smoke/data/vid2k_30.xpm		\
+	smoke/config/default.exp
+
+DEJATOOL = mkcg
+RUNTESTDEFAULTFLAGS =			\
+	--tool $$tool			\
+	--srcdir $$srcdir/smoke		\
+	--xml --status --all
+
+CLEANFILES += mkcg.xml
+
+check_PROGRAMS =			\
 	mkcg.6416			\
 	mkcg.vid2k
 
@@ -29,18 +49,20 @@ check_PROGRAMS = 			\
 noinst_LTLIBRARIES = libmkcg.la
 bin_PROGRAMS = mkcg.6416 mkcg.vid2k
 
-mkcg_6416_SOURCES = mkcg.6416.c
+mkcg_6416_SOURCES = mkcg_cmd_6416.c
 mkcg_6416_LDADD = libmkcg.la
-mkcg_6416_CFLAGS = $(AM_CFLAGS) @XPM_CFLAGS@
-mkcg_6416_LDFLAGS = $(AM_LDFLAGS) @XPM_LIBS@
 
-mkcg_vid2k_SOURCES = mkcg.vid2k.c
+mkcg_vid2k_SOURCES = mkcg_cmd_vid2k.c
 mkcg_vid2k_LDADD = libmkcg.la
-mkcg_vid2k_CFLAGS = $(AM_CFLAGS) @XPM_CFLAGS@
-mkcg_vid2k_LDFLAGS = $(AM_LDFLAGS) @XPM_LIBS@
 
-libmkcg_la_SOURCES = \
-	mkcg.c
+libmkcg_la_SOURCES =			\
+	mkcg_isvalidch.c		\
+	mkcg_out_banner.c		\
+	mkcg_out_xxd.c			\
+	mkcg_out_xpm.c			\
+	mkcg_cli.c
+libmkcg_la_CFLAGS = $(AM_CFLAGS) @XPM_CFLAGS@
+libmkcg_la_LDFLAGS = $(AM_LDFLAGS) @XPM_LIBS@
 
 noinst_HEADERS = \
 	pcmtools.h

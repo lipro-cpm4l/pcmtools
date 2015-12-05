@@ -1,7 +1,7 @@
 #
 # Autoconf definitions for top source directory
 #
-# Copyright (C) 2002-21015  Stephan Linz <linz@li-pro.net>
+# Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,23 +21,37 @@
 
 # use autogen.sh
 
+dnl *************************************************************************
+dnl *** Configure autoconf
+dnl *************************************************************************
 AC_PREREQ([2.64])
 AC_INIT([PC/M Tools],
-	[m4_esyscmd_s([./tools/get-version])],
+	[m4_esyscmd_s([./acx/get-version])],
 	[pcmtools-bug@li-pro.net],
 	[pcmtools],
 	[https://github.com/lipro/pcmtools/])
 
+AC_CONFIG_AUX_DIR([acx])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_SRCDIR([src/mkcg_cli.c])
+AC_CONFIG_HEADERS([config.h:config.in])dnl Keep filename to 8.3 for MS-DOS.
+
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
-AC_CONFIG_SRCDIR([src/mkcg.c])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
-
 AC_USE_SYSTEM_EXTENSIONS
 
-AM_INIT_AUTOMAKE([-Wall -Wno-portability dist-bzip2 dist-zip subdir-objects])
+dnl *************************************************************************
+dnl *** Configure automake
+dnl *************************************************************************
+AM_INIT_AUTOMAKE([
+	1.11
+	-Wall
+	-Wno-portability
+	dist-bzip2
+	dist-zip
+	subdir-objects
+])
 AM_MAINTAINER_MODE
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES(yes)])
 m4_pattern_allow([AM_PROG_AR])
@@ -66,6 +80,15 @@ AC_PROG_INSTALL
 AM_PROG_INSTALL_STRIP
 AC_PROG_LN_S
 AC_PROG_EGREP
+
+dnl GNU help2man creates man pages from --help output; in many cases, this
+dnl is sufficient, and obviates the need to maintain man pages separately.
+AC_PROG_HELP2MAN
+
+dnl However, this means invoking executables, which we generally cannot do
+dnl when cross-compiling, so we test to avoid that (the variable
+dnl "cross_compiling" is set by AC_PROG_CC).
+AS_IF([test $cross_compiling = yes],[HELP2MAN=:])
 
 dnl *************************************************************************
 dnl *** Check some preprocessor flags.
@@ -248,12 +271,24 @@ sys_libs="${LIBS}"
 
 AC_CACHE_SAVE
 
+dnl Copyright will apply as long as these sources are in use, e.g., are
+dnl being compiled, which is reasonable year to claim the copyright.
+AC_DEFINE([COPYRIGHT_YEAR], [m4_esyscmd([date +%Y])], [year in copyright message])
+
+dnl Are we building from git checked-out sources, or a tarball ?
+dnl This is used in "Makefile.am" to avoid re-generating distfiles
+AM_CONDITIONAL([BUILD_FROM_GIT], [test -e "$srcdir/.git"])
+
+dnl This is used in "Makefile.am" to avoid execute cross compiled
+dnl binaries where re-generating distfiles
+AM_CONDITIONAL([CROSS_COMPILING_FROM_GIT],
+               [test -e "$srcdir/.git" && test $cross_compiling = yes])
+
 AC_CONFIG_FILES([
 	Makefile
-	src/Makefile
 	data/Makefile
-	pcmtools.test/mkcg.6416.exp
-	pcmtools.test/mkcg.vid2k.exp
+	man/Makefile
+	src/Makefile
 ])
 AC_OUTPUT
 

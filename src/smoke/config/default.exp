@@ -1,0 +1,5 @@
+proc mkcg.6416_exit {} {}
+proc mkcg.6416_version {} {}
+
+proc mkcg.vid2k_exit {} {}
+proc mkcg.vid2k_version {} {}

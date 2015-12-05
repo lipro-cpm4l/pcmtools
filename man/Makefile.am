@@ -1,7 +1,7 @@
 #
-# Automake definitions for data/
+# Automake definitions for man/
 #
-# Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
+# Copyright (C) 2015  Stephan Linz <linz@li-pro.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -19,25 +19,34 @@
 # MA  02110-1301, USA.
 #
 
+ACLOCAL_AMFLAGS = -I m4
+
 EXTRA_DIST =
+CLEANFILES =
+
 EXTRA_DIST +=				\
-	CG_6416				\
-	CG_VID2K
+	mkcg.6416.x			\
+	mkcg.vid2k.x
 
-pkgdatadir = @pkgdatadir@
+if !CROSS_COMPILING_FROM_GIT
+man_MANS = mkcg.6416.1 mkcg.vid2k.1
+EXTRA_DIST += $(man_MANS)
+endif
 
-install-data-local:
-	$(AM_V_GEN)for dir in `cd $(top_srcdir)/data; \
-	                       find $(EXTRA_DIST) -type d` ; do \
-	  $(mkinstalldirs) $(DESTDIR)$(pkgdatadir)/$$dir; \
-	done
-	$(AM_V_GEN)for file in `cd $(top_srcdir)/data; \
-	                        find $(EXTRA_DIST) -type f` ; do \
-	  $(INSTALL_DATA) $(top_srcdir)/data/$$file \
-                          $(DESTDIR)$(pkgdatadir)/$$file; \
-	done
+if BUILD_FROM_GIT
+HELP2MANFLAGS += -N
 
-uninstall-local:
-	rm -rf $(DESTDIR)$(pkgdatadir)
+$(top_builddir)/src/mkcg.%$(EXEEXT): 	$(top_srcdir)/src/mkcg_cmd_%.c \
+					$(top_srcdir)/src/mkcg_cli.c \
+					$(top_srcdir)/configure.ac
+	$(AM_V_GEN)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
+
+mkcg.%.1: $(top_builddir)/src/mkcg.%$(EXEEXT) mkcg.%.x
+	$(AM_V_GEN)$(HELP2MAN) $(HELP2MANFLAGS) \
+	  -i $(srcdir)/$(patsubst %$(EXEEXT),%,$(<F)).x \
+	  $(top_builddir)/src/$(<F) -o $@
+
+CLEANFILES += $(man_MANS)
+endif
 
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
