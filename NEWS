@@ -1,4 +1,4 @@
-The PC/M tool chain 1.1 source archive release includes numerous
+The PC/M tool chain 1.2 source archive release includes numerous
 improvements that were made since the initial 1.0 source archive
 release.
 
@@ -11,6 +11,17 @@ missing output completely, but without loosing compatibility.
 
 The following areas of PC/M tool chain functionality changed in
 this release:
+
+Character Generator Layer:
+- Refectoring CLI code, avoid dublicate code.
+- Centralize the CLI in libmkcg.
+- Split libmkcg into multiple objects.
+
+Integration Test Layer:
+- Move smoke test closer to source code.
+
+Documentation:
+- Use GNU help2man to generate manpages automatically from binaries.
 
 Build and Release:
 - Enable many binary hardening features.
