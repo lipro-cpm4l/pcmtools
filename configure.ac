@@ -45,11 +45,12 @@ dnl *************************************************************************
 dnl *** Configure automake
 dnl *************************************************************************
 AM_INIT_AUTOMAKE([
-	1.11
+	1.14
 	-Wall
 	-Wno-portability
 	dist-bzip2
 	dist-zip
+	dist-xz
 	subdir-objects
 ])
 AM_MAINTAINER_MODE
