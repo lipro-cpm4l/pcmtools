@@ -1,5 +1,5 @@
 #
-# Automake definitions for src/
+# Automake definitions for src/smoke/
 #
 # Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
 #
@@ -19,35 +19,22 @@
 # MA  02110-1301, USA.
 #
 
-AM_CPPFLAGS = -I$(top_srcdir)/src
-
 EXTRA_DIST =
 CLEANFILES =
 
-SUBDIRS = . smoke
+AUTOMAKE_OPTIONS = dejagnu
 
-check_PROGRAMS = mkcg.6416 mkcg.vid2k
+EXTRA_DIST +=							\
+	mkcg/6416.exp						\
+	data/6416_30.xpm					\
+	mkcg/vid2k.exp						\
+	data/vid2k_30.xpm					\
+	config/default.exp
 
-## TODO:9000 provide libmkcg as public library after refactoring
-noinst_LTLIBRARIES = libmkcg.la
-bin_PROGRAMS = mkcg.6416 mkcg.vid2k
-
-mkcg_6416_SOURCES = mkcg_cmd_6416.c
-mkcg_6416_LDADD = libmkcg.la
-
-mkcg_vid2k_SOURCES = mkcg_cmd_vid2k.c
-mkcg_vid2k_LDADD = libmkcg.la
-
-libmkcg_la_SOURCES =			\
-	mkcg_isvalidch.c		\
-	mkcg_out_banner.c		\
-	mkcg_out_xxd.c			\
-	mkcg_out_xpm.c			\
-	mkcg_cli.c
-libmkcg_la_CFLAGS = $(AM_CFLAGS) @XPM_CFLAGS@
-libmkcg_la_LDFLAGS = $(AM_LDFLAGS) @XPM_LIBS@
-
-noinst_HEADERS = \
-	pcmtools.h
+DEJATOOL = mkcg
+RUNTESTFLAGS =							\
+	--srcdir "$(abs_srcdir)"				\
+	--objdir "$(abs_top_builddir)/src"			\
+	--status --all --verbose
 
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in

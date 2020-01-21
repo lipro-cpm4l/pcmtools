@@ -289,6 +289,7 @@ AC_CONFIG_FILES([
 	data/Makefile
 	man/Makefile
 	src/Makefile
+	src/smoke/Makefile
 ])
 AC_OUTPUT
 
