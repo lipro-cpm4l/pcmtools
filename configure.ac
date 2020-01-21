@@ -1,7 +1,7 @@
 #
 # Autoconf definitions for top source directory
 #
-# Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
+# Copyright (C) 2002-2020  Stephan Linz <linz@li-pro.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,12 +24,12 @@
 dnl *************************************************************************
 dnl *** Configure autoconf
 dnl *************************************************************************
-AC_PREREQ([2.64])
+AC_PREREQ([2.69])
 AC_INIT([PC/M Tools],
 	[m4_esyscmd_s([./acx/get-version])],
 	[pcmtools-bug@li-pro.net],
 	[pcmtools],
-	[https://github.com/lipro/pcmtools/])
+	[https://github.com/lipro-cpm4l/pcmtools/])
 
 AC_CONFIG_AUX_DIR([acx])
 AC_CONFIG_MACRO_DIR([m4])
@@ -45,11 +45,12 @@ dnl *************************************************************************
 dnl *** Configure automake
 dnl *************************************************************************
 AM_INIT_AUTOMAKE([
-	1.11
+	1.14
 	-Wall
 	-Wno-portability
 	dist-bzip2
 	dist-zip
+	dist-xz
 	subdir-objects
 ])
 AM_MAINTAINER_MODE
@@ -289,6 +290,7 @@ AC_CONFIG_FILES([
 	data/Makefile
 	man/Makefile
 	src/Makefile
+	src/smoke/Makefile
 ])
 AC_OUTPUT
 

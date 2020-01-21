@@ -1,7 +1,7 @@
 /*
  * Core functions to handle different PC/M character generator PROMs.
  *
- * Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
+ * Copyright (C) 2002-2020  Stephan Linz <linz@li-pro.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

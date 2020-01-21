@@ -1,7 +1,7 @@
 #
 # Automake definitions for src/
 #
-# Copyright (C) 2002-2015  Stephan Linz <linz@li-pro.net>
+# Copyright (C) 2002-2020  Stephan Linz <linz@li-pro.net>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,26 +24,9 @@ AM_CPPFLAGS = -I$(top_srcdir)/src
 EXTRA_DIST =
 CLEANFILES =
 
-AUTOMAKE_OPTIONS = dejagnu
+SUBDIRS = . smoke
 
-EXTRA_DIST +=				\
-	smoke/mkcg/6416.exp		\
-	smoke/data/6416_30.xpm		\
-	smoke/mkcg/vid2k.exp		\
-	smoke/data/vid2k_30.xpm		\
-	smoke/config/default.exp
-
-DEJATOOL = mkcg
-RUNTESTDEFAULTFLAGS =			\
-	--tool $$tool			\
-	--srcdir $$srcdir/smoke		\
-	--xml --status --all
-
-CLEANFILES += mkcg.xml
-
-check_PROGRAMS =			\
-	mkcg.6416			\
-	mkcg.vid2k
+check_PROGRAMS = mkcg.6416 mkcg.vid2k
 
 ## TODO:9000 provide libmkcg as public library after refactoring
 noinst_LTLIBRARIES = libmkcg.la
