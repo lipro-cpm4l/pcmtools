@@ -1,7 +1,7 @@
 dnl ac-prog-html2man.m4 0.2.0                               -*- autoconf -*-
 dnl m4 macro to find help2man program
 
-dnl Copyright (C) 2015  Stephan Linz <linz@li-pro.net>
+dnl Copyright (C) 2015-2020  Stephan Linz <linz@li-pro.net>
 
 dnl Copying and distribution of this file, with or without modification,
 dnl are permitted in any medium without royalty provided the copyright
