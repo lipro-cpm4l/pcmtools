@@ -35,11 +35,9 @@ EXTRA_DIST +=				\
 
 DEJATOOL = mkcg
 RUNTESTDEFAULTFLAGS =			\
-	--tool $$tool			\
-	--srcdir $$srcdir/smoke		\
-	--xml --status --all
-
-CLEANFILES += mkcg.xml
+	--tool "$$tool"			\
+	--srcdir "$$srcdir/smoke"	\
+	--status --all --verbose
 
 check_PROGRAMS =			\
 	mkcg.6416			\
