@@ -24,12 +24,12 @@
 dnl *************************************************************************
 dnl *** Configure autoconf
 dnl *************************************************************************
-AC_PREREQ([2.64])
+AC_PREREQ([2.69])
 AC_INIT([PC/M Tools],
 	[m4_esyscmd_s([./acx/get-version])],
 	[pcmtools-bug@li-pro.net],
 	[pcmtools],
-	[https://github.com/lipro/pcmtools/])
+	[https://github.com/lipro-cpm4l/pcmtools/])
 
 AC_CONFIG_AUX_DIR([acx])
 AC_CONFIG_MACRO_DIR([m4])
