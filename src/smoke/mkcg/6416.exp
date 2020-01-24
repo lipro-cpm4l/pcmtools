@@ -31,7 +31,7 @@ expect {
 set test "version"
 spawn ${objdir}/mkcg.6416 --version
 expect {
-  -re "^.*mkcg\\.6416.*1\\.2.*\\r\\n" {
+  -re "^.*mkcg\\.6416.*1\\.3.*\\r\\n" {
     pass "$test"
   }
   eof {fail "$test"}

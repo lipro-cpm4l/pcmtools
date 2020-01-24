@@ -1,4 +1,4 @@
-The PC/M tool chain 1.2 source archive release includes numerous
+The PC/M tool chain 1.3 source archive release includes numerous
 improvements that were made since the initial 1.0 source archive
 release.
 
@@ -26,8 +26,8 @@ Documentation:
 Build and Release:
 - Enable many binary hardening features.
 - Increased configuration and compilation warning coverage.
-- Use Autoconf 2.64 for configuration.
-- Use Automake 1.11 for compilation.
+- Use Autoconf 2.69 for configuration.
+- Use Automake 1.14 for compilation.
 - Use libtool 2.2 to produce helper library as a step toward to
   "libmkcg".
 
